@@ -45,24 +45,27 @@ def home():
 # API for Android app
 #################################
 
-@app.route('/checkin')
+@app.route('/checkin', methods = ['POST'])
 def checkin():
 	mail = request.get('mail')
 	beacon_string = request.get('beacon')
 	return "TODO"
 
-@app.route('/leave')
+@app.route('/leave', methods = ['POST'])
 def leave():
 	mail = request.get('mail')
 	beacon_string = request.get('beacon')
 	return "TODO"
 
-@app.route('/getstatus')
-def get_status():
+@app.route('/getvisits', methods = ['GET'])
+def get_visits():
+	mail = request.get('mail')
 	return "TODO"
 
-@app.route('/getvisits')
-def get_visits():
+@app.route('/register_new_device', methods = ['POST'])
+def register_new_device():
+	mail = request.get('mail')
+	beacon_string = request.get('beacon')
 	return "TODO"
 
 #################################
