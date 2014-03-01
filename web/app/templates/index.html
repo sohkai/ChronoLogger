@@ -30,16 +30,23 @@
 		</nav>
 	</div>
 
-	<div class="container-fluid" ng-if="mode=='main'">
-		<h1>{[{test}]}</hi>
+	<div class="container" ng-if="mode=='main'">
+		<h1>Schedule</h1>
+		<div class="row">
+			<div class="col-md-12">
+			<div time-line="scheduleData"></div>
+			</div>
+		</div>
+
 	</div>
 
 	<div class="container-fluid" ng-if="mode=='users'">
-		<h1>{[{test}]}: Users</hi>
+		<h1>{[{test}]}: Users</h1>
+
 	</div>
 
 	<div class="container-fluid" ng-if="mode=='member'">
-		<h1>{[{test}]}: member</hi>
+		<h1>{[{test}]}: member</h1>
 	</div>
 
 	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
