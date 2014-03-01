@@ -13,9 +13,8 @@ class Visits(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 	beacon_id = db.Column(db.Integer, db.ForeignKey("beacon.id"), nullable=False)
-	role = db.Column(db.SmallInteger, default = ROLE_USER)
-	time_entered = db.Column(db.DateTime)
-	time_left = db.Column(db.DateTime)
+	time_entered = db.Column(db.DateTime, nullable=True)
+	time_left = db.Column(db.DateTime, nullable=True)
 
 class Beacon(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
