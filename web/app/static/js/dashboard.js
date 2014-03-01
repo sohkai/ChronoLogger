@@ -5,7 +5,6 @@ angular.module('ChronoLogger', []).config(function($interpolateProvider){
 	// this function renders the entire Google Chart containter. Trigger it using attribute: 'time-line="<data array>"'
 	return function(scope, element, attrs, MonitoringService) {
 		// Log element
-		console.log(scope, element, attrs);
 		var chart = new google.visualization.Timeline(element[0]);
 		scope.$watch(attrs.timeLine, function(value) {
 			//alert('New Array: '+value);
@@ -40,16 +39,20 @@ function DashboardCtrl($scope, $http) {
 		$scope.mode = newView;
 	}
 
-	/*
-	$http.get("/api/getAllSamples")
-		.success(function(data, status, headers, config) {
-			$scope.sampleData = data.sample;
-		})
-		.error(function(data, status, headers, config) {
-			alert("Error getting data. Check console for details.");
-			console.log(status);
-		});
+	$scope.viewMember = function(id) {
+		$scope.mode = 'member';
+	}
 
-*/
-
+	$scope.request = function(url, type, data) {
+		console.log("Sending " + type + " request to " + url + " (data: " + data + ")");
+		$http({method: type, url: url, data: data})
+			.success(function(data, status, headers, config) {
+				console.log("Respnse: " + data);
+				return data;
+			})
+			.error(function(data, status, headers, config) {
+				alert("Error getting data. Check console for details.");
+				console.log(status);
+			});
+	}
 }
