@@ -4,6 +4,9 @@ from app import app, models, db
 from flask.ext.sqlalchemy import SQLAlchemy
 import datetime
 import os, json
+from models import Product
+from models import Visits
+from models import Beacon
 
 @app.route('/logout')
 def logout():
@@ -47,25 +50,64 @@ def home():
 
 @app.route('/checkin', methods = ['POST'])
 def checkin():
-	mail = request.get('mail')
-	beacon_string = request.get('beacon')
-	return "TODO"
+	mail = str(request.get('mail'))
+	beacon_string = str(request.get('beacon'))
+
+	try:
+		user = User.query.filter(User.mail == mail).one()
+	except:
+		# No user was found
+		return err404()
+
+	try:
+		beacon = Beacon.query.filter(Beacon.beacon_identifier == beacon_string).one()
+	except:
+		# No beacon was found
+		return err404()
+
+	# Create a new visits object
+	visit = Visits(user_id=user.id, beacon_id=beacon.id, time_entered=datetime.datetime.utcnow(), time_left=None)
+
+	db.session.add(visit)
+	db.session.commit()
+
+	return "" # OK
 
 @app.route('/leave', methods = ['POST'])
 def leave():
-	mail = request.get('mail')
-	beacon_string = request.get('beacon')
-	return "TODO"
+	mail = str(request.get('mail'))
+	beacon_string = str(request.get('beacon'))
+
+	try:
+		user = User.query.filter(User.mail == mail).one()
+	except:
+		# No user was found
+		return err404()
+
+	try:
+		beacon = Beacon.query.filter(Beacon.beacon_identifier == beacon_string).one()
+	except:
+		# No beacon was found
+		return err404()
+
+	# Get the corresponding visit object to complete date left
+	visit = Visits.query.filter(Visits.user_id == user.id and Visits.beacon_id == beacon.id and Visits.time_left == None).one()
+	visit.time_left = datetime.datetime.utcnow()
+
+	db.session.add(visit)
+	db.session.commit()
+
+	return ""
 
 @app.route('/getvisits', methods = ['GET'])
 def get_visits():
-	mail = request.get('mail')
+	mail = str(request.get('mail'))
 	return "TODO"
 
 @app.route('/register_new_device', methods = ['POST'])
 def register_new_device():
-	mail = request.get('mail')
-	beacon_string = request.get('beacon')
+	mail = str(request.get('mail'))
+	beacon_string = str(request.get('beacon'))
 	return "TODO"
 
 #################################
