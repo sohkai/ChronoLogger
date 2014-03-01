@@ -4,7 +4,7 @@ from app import app, models, db
 from flask.ext.sqlalchemy import SQLAlchemy
 import datetime
 import os, json
-from models import Product
+from models import User
 from models import Visits
 from models import Beacon
 
@@ -22,16 +22,6 @@ def login():
 def dashboard():
 	return render_template('index.html')
 
-@app.route('/view/<user_id>')
-def view():
-	# View activity of a particular user
-	return render_template('view.html')
-
-@app.route('/add')
-def add():
-	# Admins can add people to user list or admin list
-	return render_template('add.html')
-
 def is_loggedin():
 	return 'chrono_token' in session and session['chrono_token'] != ''
 
@@ -40,7 +30,7 @@ def home():
 	# If logged in, redirect to main dashboard, otherwise
 	# redirect to login page
 	if is_loggedin():
-		return redirect('/dashboard')
+		return render_template('index.html')
 	else:
 		return redirect('/login')
 
@@ -108,7 +98,13 @@ def get_visits():
 def register_new_device():
 	mail = str(request.get('mail'))
 	beacon_string = str(request.get('beacon'))
-	return "TODO"
+	location_string = str(request.get('location'))
+
+	beacon = Beacon(beacon_identifier=beacon_string, time_entered=datetime.datetime.utcnow(), location=location_string)
+	db.session.add(beacon)
+	db.session.commit()
+
+	return ""
 
 #################################
 # Error handlers

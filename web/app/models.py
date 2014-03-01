@@ -19,5 +19,5 @@ class Visits(db.Model):
 class Beacon(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	beacon_identifier = db.Column(db.String(128), default='')
-	location = db.Column(db.String(64), default='')
-	picture = db.Column(db.String(128), default='') # url to picture location
+	location = db.Column(db.String(64), default=None)
+	picture = db.Column(db.String(128), default=None) # url to picture location
