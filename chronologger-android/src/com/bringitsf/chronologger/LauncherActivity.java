@@ -1,23 +1,21 @@
 package com.bringitsf.chronologger;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 
 public class LauncherActivity extends Activity {
+
+    private static final String TAG = LauncherActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.launcher, menu);
-        return true;
+        
+        if (Environment.DEBUG_MODE) {
+            com.estimote.sdk.utils.L.enableDebugLogging(true);
+        }
     }
     
 }
