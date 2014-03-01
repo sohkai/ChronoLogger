@@ -35,6 +35,26 @@ def home():
 		return redirect('/login')
 
 #################################
+# API for Tim
+#################################
+
+@app.route('/get_for_user/<id>')
+def get_for_user(id = None):
+	return "TODO"
+
+@app.route('/get_for_all')
+def get_for_all():
+	date = datetime.datetime.utcnow()
+
+	beacon = Beacon.query.filter(Beacon.beacon_identifier == beacon_string).one()
+
+	return "TODO"
+
+@app.route('/get_for_all/<time>')
+def get_for_all(time = None):
+	return "TODO"
+
+#################################
 # API for Android app
 #################################
 
@@ -92,7 +112,20 @@ def leave():
 @app.route('/getvisits', methods = ['GET'])
 def get_visits():
 	mail = str(request.get('mail'))
-	return "TODO"
+	try:
+		user = User.query.filter(User.mail == mail).one()
+	except:
+		# No user was found
+		return err404()
+
+	visits = Visits.query.filter(Visits.user_id == user.id).all()
+	
+	visits_to_return = []
+	for visit in visits:
+		beacon = Beacon.query.filter(Beacon.id == beacon_id).one()
+		visits_to_return.append({'time_entered': visit.time_entered, 'time_left': visit.time_left, 'location': beacon.location})
+
+	return json.dumps({'visits': visits_to_return, 'name': user.name})
 
 @app.route('/register_new_device', methods = ['POST'])
 def register_new_device():
