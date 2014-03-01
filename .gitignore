@@ -6,6 +6,9 @@
 # Files for the Dalvik VM
 *.dex
 
+# Python compiled
+*.pyc
+
 # Java class files
 *.class
 
