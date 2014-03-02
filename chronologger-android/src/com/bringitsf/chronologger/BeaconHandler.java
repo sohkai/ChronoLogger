@@ -4,17 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.Utils;
 
-public class ServerConnection {
+public class BeaconHandler {
     
-    private static final String TAG = ServerConnection.class.getName();
-    private static final String SERVER_END_POINT = "";
+    private static final String TAG = BeaconHandler.class.getName();
+    private static final String CHECKIN_END_POINT = "/checkin/";
+    private static final String EXIT_END_POINT = "/leave/";
     
     //FIXME: login request would ideally return status about the user has, ie. admin privileges, major, and minor ibeacon ids to
     // set up appropriate ranges.
@@ -33,7 +39,7 @@ public class ServerConnection {
     }
     
     public static void discoveredBeacons(Region region, List<Beacon> beacons) {
-        if (mRegisteredRegions.containsKey(region)) {
+        if (mRegisteredRegions.containsKey(region.getIdentifier())) {
             List<Beacon> newBeacons = new ArrayList<Beacon>();
             for (Beacon beacon : beacons) {
                 if (isBeaconInRange(beacon) && addDiscoveredBeacon(beacon)) {
@@ -54,13 +60,13 @@ public class ServerConnection {
     }
     
     public static void enteredRegion(Region region) {
-        if (mRegisteredRegions.containsKey(region)) {
+        if (mRegisteredRegions.containsKey(region.getIdentifier())) {
             beaconsEnteredInRegion(region);
         }
     }
     
     public static void exitedRegion(Region region) {
-        if (mRegisteredRegions.containsKey(region)) {
+        if (mRegisteredRegions.containsKey(region.getIdentifier())) {
             beaconsExitedInRegion(region);
         }
     }
@@ -73,7 +79,6 @@ public class ServerConnection {
         return false;
     }
     
-    //FIXME: this might be able to all go away by using Utils.isBeaconInRegion()
     private static boolean addDiscoveredBeacon(Beacon beacon) {
         String beaconUUID = beacon.getProximityUUID();
         int beaconMajor = beacon.getMajor();
@@ -185,18 +190,41 @@ public class ServerConnection {
     }
     
     private static void checkInToServer(Beacon beacon) {
-        String url = getServerEndPoint(beacon);
-        //VolleyHandler.sendRequest(Request.Method.POST, url, null, listener, errorListener);
+        String checkInUrl = Environment.BASE_URL + CHECKIN_END_POINT + getUserEndPoint(beacon);
+        Log.i(TAG, "Sending check in request for: " + checkInUrl);
+        VolleyHandler.sendRequest(Request.Method.POST, checkInUrl, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG, "Successful check in request!");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Unsuccessful check in request :(!");
+                Log.e(TAG, "Volley error: " + error.getMessage());
+            }
+        });
     }
     
     private static void exitRegionToServer(Beacon beacon) {
-        String url = getServerEndPoint(beacon);
-        //VolleyHandler.sendRequest(Request.Method.POST, url, null, listener, errorListener);
+        String exitUrl = Environment.BASE_URL + EXIT_END_POINT + getUserEndPoint(beacon);
+        Log.i(TAG, "Sending exit request for: " + exitUrl);
+        VolleyHandler.sendRequest(Request.Method.POST, exitUrl, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i(TAG, "Successful exit request!");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Unsuccessful exit request :(!");
+                Log.e(TAG, "Volley error: " + error.getMessage());
+            }
+        });
     }
     
-    private static String getServerEndPoint(Beacon beacon) {
-        return SERVER_END_POINT + "/" + DefaultSharedPrefs.getString(DefaultSharedPrefs.EXTRA_USER_EMAIL, "") + "/" +
-                        beacon.getProximityUUID() + beacon.getMajor() + beacon.getMinor();
+    private static String getUserEndPoint(Beacon beacon) {
+        return DefaultSharedPrefs.getString(DefaultSharedPrefs.EXTRA_USER_EMAIL, "") + "/" + beacon.getProximityUUID() + beacon.getMajor() + beacon.getMinor();
     }
     
     private interface FoundBeaconListener {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_default_list_item"
+    tools:context=".HistoryListItem" >
+    
+    <ImageView android:id="@+id/estimote_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:scaleType="centerCrop"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_centerInParent="true"
+        android:minHeight="20dp"
+        android:minWidth="20dp"
+        android:contentDescription="@string/res_estimote_icon"
+        android:src="@drawable/beacon_gray"
+        />
+    
+    <TextView android:id="@+id/history_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/estimote_icon"
+        android:singleLine="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+    
+    <TextView android:id="@+id/history_time_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/history_location"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/estimote_icon"
+        android:singleLine="true"
+        android:textSize="14sp"
+        />
+    
+    <TextView android:id="@+id/history_time_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/history_time_start"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/estimote_icon"
+        android:singleLine="true"
+        android:textSize="14sp"
+        />
+
+</RelativeLayout>

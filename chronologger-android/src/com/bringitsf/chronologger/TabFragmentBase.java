@@ -8,12 +8,13 @@ import com.bringitsf.chronologger.TabPagerAdapter.TabType;
 public abstract class TabFragmentBase extends Fragment {
     
     private static String TAG = TabFragmentBase.class.getName();
+    protected static final String UPDATE_END_POINT = "/getvisits/";
     
     public static TabFragmentBase newInstance(TabType tabType) {
         TabFragmentBase fragment;
         switch (tabType) {
-            case CURRENT:
-                fragment = new TabFragmentCurrent();
+            case HOME:
+                fragment = new TabFragmentHome();
                 break;
             case HISTORY:
                 fragment = new TabFragmentHistory();
@@ -22,9 +23,9 @@ public abstract class TabFragmentBase extends Fragment {
                 fragment = new TabFragmentAdmin();
                 break;
             default:
-                Log.e(TAG, "Tab type of " + tabType + " does not match known tabs. Defaulting to current tab.");
-                // Select current page by default
-                fragment = new TabFragmentCurrent();
+                Log.e(TAG, "Tab type of " + tabType + " does not match known tabs. Defaulting to home tab.");
+                // Select home page by default
+                fragment = new TabFragmentHome();
         }
         return fragment;
     }
@@ -33,7 +34,7 @@ public abstract class TabFragmentBase extends Fragment {
         super();
     }
     
-    public void tabSelected() {
+    public void onThisTabSelected() {
     }
     
 }

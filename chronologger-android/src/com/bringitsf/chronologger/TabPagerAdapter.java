@@ -9,7 +9,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 public class TabPagerAdapter extends FragmentPagerAdapter {
     
     public enum TabType {
-        CURRENT,
+        HOME,
         HISTORY,
         ADMIN
     }

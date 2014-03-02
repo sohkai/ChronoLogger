@@ -3,16 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TabFragmentHistory" >
+    tools:context=".TabFragmentHome" >
+    
+    <!-- put logo here -->
+    <ImageView android:id="@+id/home_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:scaleType="centerCrop"
+        android:src="@drawable/chrono_logo"
+        android:contentDescription="@string/res_logo"
+        />
 
-    <ListView android:id="@+id/history_list"
+    <ListView android:id="@+id/home_list"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/listview_horizontal_padding"
-        android:paddingRight="@dimen/listview_horizontal_padding"
-        android:paddingTop="30dp"
-        android:paddingBottom="@dimen/listview_vertical_padding"
+        android:layout_below="@id/home_logo"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideInset"
         android:divider="@android:color/transparent"

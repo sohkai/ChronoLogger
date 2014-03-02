@@ -11,9 +11,17 @@
     <string name="login_signup">Sign up</string>
     
     <!-- Viewpager tab names -->
-    <string name="tab_admin">Administration</string>
-    <string name="tab_current">Current</string>
+    <string name="tab_admin">Admin</string>
+    <string name="tab_home">Current</string>
     <string name="tab_history">History</string>
+    
+    <!-- Tab headers -->
+    <string name="admin_header_title">Admin header</string>
+    <string name="admin_header_body">Admin body</string>
+    <string name="home_header_title">Home header</string>
+    <string name="home_header_body">Home body</string>
+    <string name="history_header_title">History header</string>
+    <string name="history_header_body">History body</string>
     
     <!-- Settings -->
     <string name="menu_sign_out">Log out</string>
@@ -24,5 +32,9 @@
     <!-- Toast messages -->
     <string name="toast_forgot_password">A new password has been emailed to your account.</string>
     <string name="toast_ranging_failed">Not able to start looking for iBeacons. Please try again at a later time.</string>
+    
+    <!-- Content descriptions -->
+    <string name="res_logo">ChronoLogger logo</string>
+    <string name="res_estimote_icon">Estimote icon</string>
 
 </resources>

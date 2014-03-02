@@ -66,7 +66,9 @@ public class LauncherActivity extends Activity {
         //FIXME: web team didn't want to make legit logins, so here we are
         Intent mainIntent = new Intent(this, MainActivity.class);
         EditText username = (EditText) findViewById(R.id.login_username);
-        DefaultSharedPrefs.putString(DefaultSharedPrefs.EXTRA_USER_EMAIL, username.getText().toString());
+        //FIXME: this is terrible but so is this whole login part
+        //FIXME: use username
+        DefaultSharedPrefs.putString(DefaultSharedPrefs.EXTRA_USER_EMAIL, "user1@jeff.com"/*username.getText().toString()*/);
         Log.i(TAG, "Starting main activity");
         startActivity(mainIntent);
         resetLoginState();
