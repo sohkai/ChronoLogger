@@ -47,7 +47,7 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.dashboard.previous.members = [];
 
-	$scope.member.member = {};
+	$scope.member.members = {};
 
 	$scope.member.scheduleData = {
 		column: [{ type: 'string', id: 'Date' },
@@ -59,30 +59,7 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.$on('datepicker-change', function(event, newDate) {
 		$scope.request('/get_for_all/' + newDate, 'GET').then(function(result) {
-			$scope.dashboard.previous.scheduleData.value = [];
-			$scope.dashboard.previous.members = [];
-			result = result.data;
-			for (var name = 0; name < result.data.length; name++) {
-				if (result.data[name].visits.length != 0) {
-					$scope.dashboard.previous.members.push({id: result.data[name].memberId, name: result.data[name].name});
-				}
-				for (var i = 0; i < result.data[name].visits.length; i++) {
-					var start = new Date(result.data[name].visits[i].time_entered * 1000);
-					if (result.data[name].visits[i].time_left == "") {
-						var end = new Date(result.data[name].visits[i].time_left * 1000);
-					} else {
-						var end = new Date();	// if end date is null, then set end date to current time
-					}
-
-					$scope.dashboard.previous.scheduleData.value.push([
-						result.data[name].name,
-						result.data[name].visits[i].location,
-						new Date(0, 0, 0, start.getHours(), start.getMinutes()),
-						new Date(0, 0, 0, end.getHours(), end.getMinutes()),
-					]);
-				}
-			}
-
+			$scope.formatToChart(result, $scope.dashboard.previous.scheduleData, $scope.dashboard.previous.members);
 			if ($scope.dashboard.previous.members.length != 0) {
 				$scope.viewPrevious = true;
 			} else {
@@ -114,25 +91,7 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.viewDashboard = function() {
 		$scope.request('/get_for_all_today', 'GET').then(function(result) {
-			$scope.dashboard.scheduleData.value = [];
-			$scope.dashboard.members = [];
-			result = result.data;
-			for (var name = 0; name < result.data.length; name++) {
-				if (result.data[name].visits.length != 0) {
-					$scope.dashboard.members.push({id: result.data[name].memberId, name: result.data[name].name});
-				}
-				for (var i = 0; i < result.data[name].visits.length; i++) {
-					var start = new Date(result.data[name].visits[i].time_entered * 1000);
-					var end = new Date(result.data[name].visits[i].time_left * 1000);
-
-					$scope.dashboard.scheduleData.value.push([
-						result.data[name].name,
-						result.data[name].visits[i].location,
-						new Date(0, 0, 0, start.getHours(), start.getMinutes()),
-						new Date(0, 0, 0, end.getHours(), end.getMinutes()),
-					]);
-				}
-			}
+			$scope.formatToChart(result, $scope.dashboard.scheduleData, $scope.dashboard.members);
 			console.log($scope.dashboard.scheduleData)
 			$scope.mode = "main";
 		});
@@ -149,6 +108,32 @@ function DashboardCtrl($scope, $http, $location) {
 				alert("Error getting data. Check console for details.");
 				console.log(status);
 			});
+	}
+
+	$scope.formatToChart = function(raw, schedule, members) {
+		schedule.value = [];
+		members = [];
+		raw = raw.data;
+		for (var name = 0; name < raw.data.length; name++) {
+			if (raw.data[name].visits.length != 0) {
+				members.push({id: raw.data[name].memberId, name: raw.data[name].name});
+			}
+			for (var i = 0; i < raw.data[name].visits.length; i++) {
+				var start = new Date(raw.data[name].visits[i].time_entered * 1000);
+				if (raw.data[name].visits[i].time_left != "") {
+					var end = new Date(raw.data[name].visits[i].time_left * 1000);
+				} else {
+					var end = new Date();	// if end date is null, then set end date to current time
+				}
+
+				schedule.value.push([
+					raw.data[name].name,
+					raw.data[name].visits[i].location,
+					new Date(0, 0, 0, start.getHours(), start.getMinutes()),
+					new Date(0, 0, 0, end.getHours(), end.getMinutes()),
+				]);
+			}
+		}
 	}
 
 
@@ -198,15 +183,6 @@ var DatepickerCtrl = function ($scope) {
 	  };
 
 	  $scope.format = 'dd-MMMM-yyyy';
-
-
-		$scope.dashboard.previous.scheduleData = {
-			column: [{ type: 'string', id: 'Member' },
-					  { type: 'string', id: 'Location' },
-					  { type: 'date', id: 'Start' },
-					  { type: 'date', id: 'End' }],
-			value: [],
-		};
 
 		$scope.$watch('dt', function() {
 			$scope.$emit('datepicker-change',  Math.floor($scope.dt.getTime()/1000));
