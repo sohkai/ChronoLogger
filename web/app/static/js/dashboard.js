@@ -26,6 +26,7 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.dashboard = {};	// variables used in dashboard
 	$scope.member = {};		// variables used in member
+	$scope.locations = {};		// variables used in locations
 
 	$scope.dashboard.scheduleData = {
 		column: [{ type: 'string', id: 'Member' },
@@ -60,17 +61,6 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.member.tableData = $scope.member.member.events;
 
-	$scope.toggleView = function(newView) {
-		$scope.mode = newView;
-	}
-
-	$scope.viewMember = function(id) {
-		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
-			console.log(result.data);
-		});
-		$scope.mode = 'member';
-	}
-
 	$scope.request = function(url, type, data) {
 		console.log("Sending " + type + " request to " + url + " (data: " + data + ")");
 		return $http({method: type, url: url, data: data})
@@ -84,6 +74,23 @@ function DashboardCtrl($scope, $http, $location) {
 			});
 	}
 
+	$scope.toggleView = function(newView) {
+		if (newView === 'location') {
+			$scope.request('/locations', 'GET').then(function(result) {
+				$scope.locations = result.data;
+				$scope.mode = newView;
+			});
+		} else {
+			$scope.mode = newView;
+		}
+	}
+
+	$scope.viewMember = function(id) {
+		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
+			console.log(result.data);
+		});
+		$scope.mode = 'member';
+	}
 
 	$scope.request('/get_for_all_today', 'GET').then(function(result) {
 		console.log(result.data);
