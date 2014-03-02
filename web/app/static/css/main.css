@@ -20,3 +20,9 @@ body {
 	width: 200px;
 	border-radius: 10px;
 }
+
+.profile-pic {
+	max-height: 100px;
+	position: absolute;
+	right: 10px;
+}
