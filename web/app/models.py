@@ -8,6 +8,7 @@ class User(db.Model):
 	mail = db.Column(db.String(256), default='')
 	name = db.Column(db.String(128), default='')
 	role = db.Column(db.SmallInteger, default = ROLE_USER)
+	picture = db.Column(db.String(128), default=None)
 
 class Visits(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
