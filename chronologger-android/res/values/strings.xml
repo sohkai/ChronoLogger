@@ -16,12 +16,11 @@
     <string name="tab_history">History</string>
     
     <!-- Tab headers -->
-    <string name="admin_header_title">Admin header</string>
-    <string name="admin_header_body">Admin body</string>
-    <string name="home_header_title">Home header</string>
-    <string name="home_header_body">Home body</string>
-    <string name="history_header_title">History header</string>
-    <string name="history_header_body">History body</string>
+    <string name="admin_header_title">Admininstration</string>
+    <string name="admin_header_body">Select devices to configure</string>
+    <string name="home_header_title">Current location</string>
+    <string name="history_header_title">Location history</string>
+    <string name="history_header_body">You have been at these places in the past week</string>
     
     <!-- Settings -->
     <string name="menu_sign_out">Log out</string>
@@ -36,5 +35,6 @@
     <!-- Content descriptions -->
     <string name="res_logo">ChronoLogger logo</string>
     <string name="res_estimote_icon">Estimote icon</string>
+    <string name="res_login_bg">Login background image</string>
 
 </resources>

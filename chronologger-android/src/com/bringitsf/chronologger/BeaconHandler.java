@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -39,19 +40,23 @@ public class BeaconHandler {
     }
     
     public static void discoveredBeacons(Region region, List<Beacon> beacons) {
+        Toast.makeText(ChronoLoggerApplication.getAppContext(), Integer.toString(beacons.size()), Toast.LENGTH_SHORT).show();
         if (mRegisteredRegions.containsKey(region.getIdentifier())) {
             List<Beacon> exitedBeacons = findExitedBeacons(beacons);
-            List<Beacon> discoveredBeacons = addDiscoveredBeacons(beacons);
             // Because Vlad would much rather I do these all one by one on my side and doesn't want to bother
             // dealing with a simple JSON array of beacons :(
             // We first exit from the beacons we lost
             if (!exitedBeacons.isEmpty()) {
+                Toast.makeText(ChronoLoggerApplication.getAppContext(), "FOUND EXITING BEACONS", Toast.LENGTH_LONG).show();
                 for (Beacon beacon : exitedBeacons) {
                     exitRegionToServer(beacon);
                 }
             }
+
             // And then register to the ones we just found
+            List<Beacon> discoveredBeacons = addDiscoveredBeacons(beacons);
             if (!discoveredBeacons.isEmpty()) {
+                Toast.makeText(ChronoLoggerApplication.getAppContext(), "FOUND NEW BEACONS", Toast.LENGTH_LONG).show();
                 for (Beacon beacon : discoveredBeacons) {
                     checkInToServer(beacon);
                 }
@@ -86,7 +91,9 @@ public class BeaconHandler {
     }
     
     private static boolean isBeaconInRange(Beacon beacon) {
-        // Must be within 10 meters to register with us
+        Toast.makeText(ChronoLoggerApplication.getAppContext(), "BEACON IN RANGE distance: " + Utils.computeAccuracy(beacon) + ", UUID: " + beacon.getProximityUUID() + " Major: " +
+                    beacon.getMajor() + " Minor: " + beacon.getMinor(), Toast.LENGTH_SHORT).show();
+        // Must be within 5 meters to register with us
         if (Utils.computeAccuracy(beacon) <= IN_RANGE_DISTANCE) {
             return true;
         }
