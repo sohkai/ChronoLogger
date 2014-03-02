@@ -9,6 +9,13 @@ from app.models import Beacon
 
 beacon1 = Beacon(beacon_identifier="FakeSoFake1", location="Conference Room", picture='/static/images/bathroom.jpg')
 beacon2 = Beacon(beacon_identifier="FakeSoFake2", location="Cafe", picture='/static/images/linkedin1.jpg')
+
+real_beacon1 = Beacon(beacon_identifier="b9407f30-f5f8-466e-aff9-25556b57fe6d991", location="RackSpace kitchen", picture='/static/images/bathroom.jpg')
+real_beacon2 = Beacon(beacon_identifier="b9407f30-f5f8-466e-aff9-25556b57fe6d992", location="RackSpace presentation room", picture='/static/images/linkedin1.jpg')
+
+db.session.add(real_beacon1)
+db.session.add(real_beacon2)
+
 db.session.add(beacon1)
 db.session.add(beacon2)
 

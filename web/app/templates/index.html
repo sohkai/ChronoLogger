@@ -76,7 +76,7 @@
 			<div ng-repeat="item in locations.data" style="width:500px; height: 200px; margin-bottom: 20px;">
 	    		<div style="float:left; width: 300px;">
 	    			<h3 style="margin-top: 0px;">{[{ item.location_name }]}</h3>
-	    			<h4 ng-if="item.users.length == 0">There is no one in the {[{item.location_name}]}</h4>
+	    			<h4 ng-if="item.users.length == 0"><small>There is no one in the {[{item.location_name}]}</small></h4>
 	    			<h4 ng-repeat="user in item.users"><small>{[{ user.name }]} is here since {[{ user.time_entered }]}</small></h4>
 	    		</div>
 	    		<div style="float:left; width: 200px;">
