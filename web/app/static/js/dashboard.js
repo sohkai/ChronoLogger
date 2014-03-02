@@ -76,7 +76,11 @@ function DashboardCtrl($scope, $http, $location) {
 
 			for (var i = 0; i < result.data.visits.length; i++) {
 				var start = new Date(result.data.visits[i].time_entered * 1000);
-				var end = new Date(result.data.visits[i].time_left * 1000);
+				if (result.data.visits[i].time_left == "") {
+					var end = new Date();
+				} else {
+					var end = new Date(result.data.visits[i].time_left * 1000);	
+				}
 				$scope.member.scheduleData.value.push([
 					moment(start).format('dddd, MMMM Do YYYY'), 
 					result.data.visits[i].location, 
@@ -133,6 +137,7 @@ function DashboardCtrl($scope, $http, $location) {
 					new Date(0, 0, 0, start.getHours(), start.getMinutes()),
 					new Date(0, 0, 0, end.getHours(), end.getMinutes()),
 				]);
+				console.log(dashboard.scheduleData.value);
 			}
 		}
 	}

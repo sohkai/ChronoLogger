@@ -86,7 +86,7 @@ def get_for_user(id = None):
 		visits_to_return.append({'time_entered': time_entered, 'time_left': time_left, \
 			'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
 
-	return json.dumps({'visits': visits_to_return, 'name': user.name})
+	return json.dumps({'visits': visits_to_return, 'name': user.name, 'picture': user.picture})
 
 @app.route('/get_for_all_today')
 def get_for_all_today():
