@@ -49,8 +49,9 @@ function DashboardCtrl($scope, $http, $location) {
 		value: [],
 	};
 
+	$scope.beacons = [];
+
 	$scope.dashboard.members = [];
-	$scope.dashboard.previous.members = [];
 
 	$scope.member.members = {};
 
@@ -65,7 +66,7 @@ function DashboardCtrl($scope, $http, $location) {
 	$scope.$on('datepicker-change', function(event, newDate) {
 		$scope.request('/get_for_all/' + newDate, 'GET').then(function(result) {
 			$scope.formatToChart(result, $scope.dashboard.previous);
-			if ($scope.dashboard.previous.members.length != 0) {
+			if ($scope.dashboard.previous.scheduleData.value.length != 0) {
 				$scope.showPrevious = true;
 			} else {
 				$scope.showPrevious = false;
@@ -101,8 +102,13 @@ function DashboardCtrl($scope, $http, $location) {
 	$scope.viewDashboard = function() {
 		$scope.request('/get_for_all_today', 'GET').then(function(result) {
 			$scope.formatToChart(result, $scope.dashboard);
-			console.log($scope.dashboard)
 			$scope.mode = "main";
+		});
+		$scope.request('/locations', 'GET').then(function(result) {
+			$scope.beacons = result.data;
+		});
+		$scope.request('/get_all_members', 'GET').then(function(result) {
+			$scope.dashboard.members = result.data;
 		});
 	}
 
@@ -121,12 +127,8 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.formatToChart = function(raw, dashboard) {
 		dashboard.scheduleData.value = [];
-		dashboard.members = [];
 		raw = raw.data;
 		for (var name = 0; name < raw.data.length; name++) {
-			if (raw.data[name].visits.length != 0) {
-				dashboard.members.push({id: raw.data[name].memberId, name: raw.data[name].name});
-			}
 			for (var i = 0; i < raw.data[name].visits.length; i++) {
 				var start = new Date(raw.data[name].visits[i].time_entered * 1000);
 				if (raw.data[name].visits[i].time_left != "") {
