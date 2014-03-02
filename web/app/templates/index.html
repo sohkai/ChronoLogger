@@ -15,47 +15,46 @@
 
 <body ng-controller="DashboardCtrl">
 
-	<div class="container">	
-		<nav class="navbar navbar-inverse" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#" ng-click="toggleView('main')">ChronoLogger Admin Panel</a>
-				</div>
-				<ul class="nav navbar-nav">
-					<li><a ng-click="toggleView('users')" href="#">Users</a></li>
-					<li><a ng-click="toggleView('location')" href="#">Locations</a></li>
-				</ul>
+	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#" ng-click="toggleView('main')">ChronoLogger Admin Panel</a>
 			</div>
-		</nav>
-	</div>
-
+			<ul class="nav navbar-nav">
+				<li><a ng-click="toggleView('users')" href="#">Users</a></li>
+				<li><a ng-click="toggleView('location')" href="#">Locations</a></li>
+			</ul>
+		</div>
+	</nav>
 	<div class="container" ng-if="mode=='main'">
-		<div class="row">
+		<div class="row well">
 			<h1>Today's Log</h1>
 			<div class="col-xs-11">
 				<div time-line="dashboard.scheduleData"></div>
 			</div>
-			<div class="dataDetails btn btn-default" ng-repeat="member in dashboard.members" ng-click="viewMember(member.id)">More Info</div>
+			<div class="col-xs-1">
+				<div class="dataDetails btn btn-default" ng-repeat="member in dashboard.members" ng-click="viewMember(member.id)">More Info</div>
+			</div>
 		</div>
 	</div>
 	<div class="container" ng-show="mode=='main'">
-		<div class="row">
+		<div class="row well">
 			<h1>Previous Days</h1>
-			<div class="col-xs-11">
-	            <p class="input-group" ng-controller="DatepickerCtrl">
-	              <input type="text" class="form-control" datepicker-popup="{[{format}]}" ng-model="dt" is-open="opened" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+			<div class="col-xs-10">
+	            <p class="input-group" ng-controller="DatepickerCtrl" style="width:200px">
+	              <input type="text" class="form-control" datepicker-popup="{[{format}]}" ng-model="dt" is-open="opened" max="maxDate" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
 	              <span class="input-group-btn">
 	                <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 	              </span>
 	            </p>
 			</div>
-		</div>
-		<div class="row">
 			<div class="col-xs-11">
 				<div ng-if="showPrevious == true" time-line="dashboard.previous.scheduleData"></div>
 				<h5 ng-if="showPrevious == false">No logs for day selected.</h5>
 			</div>
-			<div class="dataDetails btn btn-default" ng-repeat="member in dashboard.previous.members" ng-click="viewMember(member.id)">More Info</div>
+			<div class="col-xs-1">
+				<div class="dataDetails btn btn-default" ng-repeat="member in dashboard.previous.members" ng-click="viewMember(member.id)">More Info</div>
+			</div>
 		</div>
 	</div>
 	<div class="container" ng-if="mode=='users'">

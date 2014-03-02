@@ -1,9 +1,13 @@
 body {
 	margin-bottom: 300px;
+	background-color: #0b2530; /*Default bg, similar to the background's base color*/
+	background-image: url("/static/images/background.png");
+	background-position: right bottom; /*Positioning*/
+	background-repeat: no-repeat; /*Prevent showing multiple background images*/
 }
 
 .navbar {
-	margin-top: 10px;
+	padding-top: 30px;
 }
 
 .dataDetails {

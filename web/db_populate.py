@@ -48,7 +48,7 @@ db.session.commit()
 
 visit1 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 9, 30, 0), time_left=None)
 visit2 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 11, 45, 0), time_left=None)
-visit3 = Visits(user_id=user3.id, beacon_id=beacon3.id, time_entered=datetime.datetime(2014, 03, 2, 13, 45, 0), time_left=None)
+visit3 = Visits(user_id=user3.id, beacon_id=beacon3.id, time_entered=datetime.datetime(2014, 03, 2, 12, 45, 0), time_left=None)
 
 visit4 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 11, 30, 0), time_left=datetime.datetime(2014, 03, 1, 15, 30, 0))
 visit5 = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 16, 10, 0), time_left=datetime.datetime(2014, 03, 1, 17, 0, 0))
