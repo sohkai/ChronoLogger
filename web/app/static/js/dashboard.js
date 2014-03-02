@@ -64,6 +64,7 @@ function DashboardCtrl($scope, $http, $location) {
 	};
 
 	$scope.$on('datepicker-change', function(event, newDate) {
+		$scope.showPrevious = false;
 		$scope.request('/get_for_all/' + newDate, 'GET').then(function(result) {
 			$scope.formatToChart(result, $scope.dashboard.previous);
 			if ($scope.dashboard.previous.scheduleData.value.length != 0) {
@@ -75,6 +76,7 @@ function DashboardCtrl($scope, $http, $location) {
 	});
 
 	$scope.viewMember = function(id) {
+		$scope.mode = "none"
 		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
 			$scope.member.member = result.data;
 			$scope.member.scheduleData.value = [];

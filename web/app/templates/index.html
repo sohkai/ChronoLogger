@@ -21,6 +21,7 @@
 				<a class="navbar-brand" href="#" ng-click="toggleView('main')"><img class="logo" src="/static/images/logo_white.png"></img>  Admin Panel</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
+				<li ng-if="mode != 'main'"><a ng-click="toggleView('main')" href="#">Home</a></li>
 				<li><a ng-click="toggleView('location')" href="#">Locations</a></li>
 				<li><a href="/logout">Logout</a></li>
 			</ul>
@@ -76,10 +77,10 @@
 				<div class="container-fluid" ng-if="mode=='member'">
 					<div class="row well">
 						<div class="row"  style="margin-bottom:50px">
-							<div class="col-md-5">
+							<div class="col-md-7">
 								<h1>Member data: {[{member.member.name}]}</h1>
 							</div>
-							<div class="col-md-2 col-md-offset-5">
+							<div class="col-md-2 col-md-offset-3">
 								<img class="profile-pic" ng-src="{[{member.member.picture}]}"/>
 							</div>
 						</div>
