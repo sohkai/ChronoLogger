@@ -67,17 +67,41 @@ def get_for_user(id = None):
 
 	return json.dumps({'visits': visits_to_return, 'name': user.name})
 
-@app.route('/get_for_all')
-def get_for_all():
-	date = datetime.datetime.utcnow()
-
-	beacon = Beacon.query.filter(Beacon.beacon_identifier == beacon_string).one()
-
-	return "TODO"
+@app.route('/get_for_all_today')
+def get_for_all_today():
+	return get_for_all(time=datetime.datetime.utcnow().strftime('%s'))
 
 @app.route('/get_for_all/<time>')
-def get_for_all(time = None):
-	return "TODO"
+def get_for_all(time=None):
+	date = datetime.datetime.fromtimestamp(int(time))
+	data = []
+
+	users = User.query.all()
+	for user in users:
+		visits = Visits.query.filter(Visits.user_id == user.id).all()
+		collected_visits = []
+		
+		for visit in visits:
+			beacon = Beacon.query.filter(Beacon.id == visit.beacon_id).one()
+
+			if visit.time_entered.strftime("%Y:%m:%d") != date.strftime("%Y:%m:%d"):
+				continue # This isn't today
+
+			try:
+				time_entered = visit.time_entered.strftime('%s')
+			except:
+				time_entered = ''
+
+			try:
+				time_left = visit.time_left.strftime('%s')
+			except:
+				time_left = ''
+
+			collected_visits.append({'time_entered': time_entered, 'time_left': time_left, \
+				'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
+		data.append({'name': user.name, 'visits': collected_visits})
+
+	return json.dumps({'data': data})
 
 #################################
 # API for Android app
