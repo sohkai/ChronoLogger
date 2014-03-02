@@ -51,7 +51,7 @@ def get_for_user(id = None):
 		# No user was found
 		return err404()
 
-	visits = Visits.query.filter(Visits.user_id == user.id).all()
+	visits = Visits.query.filter(Visits.user_id == user.id).order_by(Visits.time_entered.desc()).all()
 	
 	visits_to_return = []
 	for visit in visits:
@@ -83,7 +83,7 @@ def get_for_all(time=None):
 
 	users = User.query.all()
 	for user in users:
-		visits = Visits.query.filter(Visits.user_id == user.id).all()
+		visits = Visits.query.filter(Visits.user_id == user.id).order_by(Visits.time_entered.desc()).all()
 		collected_visits = []
 		
 		for visit in visits:
