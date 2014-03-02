@@ -1,4 +1,12 @@
-<resources>
-
-
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Login text entry fields -->
+    <style name="Login.FreeText" parent="@android:style/Widget">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textColor">#1E75B3</item>
+    </style>
+        
 </resources>

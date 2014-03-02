@@ -1,11 +1,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".LauncherActivity" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
+       
+    <EditText android:id="@+id/login_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/login_username_hint"
+        android:inputType="textEmailAddress|textNoSuggestions"
+        />
+    
+    <EditText android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_username"
+        android:hint="@string/login_password_hint"
+        android:inputType="textVisiblePassword|textNoSuggestions"
+        android:imeOptions="actionGo"
+        />
+    
+    <Button android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_password"
+        android:text="@string/login_button"
+        />
+    
+    <TextView android:id="@+id/login_forget_password"
+        style="@style/Login.FreeText"
+        android:layout_below="@id/login_button"
+        android:text="@string/login_forget_password"
+        />
+    
+    <ProgressBar android:id="@+id/login_progress_bar"
+           style="?android:attr/progressBarStyle"
+           android:indeterminate="true"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/login_forget_password"
+           android:layout_centerHorizontal="true"
+           android:visibility="invisible"
+        />
+    
+    <TextView android:id="@+id/login_signup"
+        style="@style/Login.FreeText"
+           android:layout_alignParentBottom="true"
+        android:text="@string/login_signup"
+        />
 
 </RelativeLayout>

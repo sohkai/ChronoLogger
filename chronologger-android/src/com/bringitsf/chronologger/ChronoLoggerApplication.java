@@ -17,7 +17,10 @@ public class ChronoLoggerApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-
+        
+        if (Environment.DEBUG_MODE) {
+            com.estimote.sdk.utils.L.enableDebugLogging(true);
+        }
     }
 
     public static Context getAppContext() {
