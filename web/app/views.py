@@ -94,10 +94,8 @@ def get_for_all_today():
 
 @app.route('/get_for_all/<time>')
 def get_for_all(time=None):
-	date = datetime.datetime.fromtimestamp(int(time) - 8 * 60 * 60)
+	date = datetime.datetime.fromtimestamp(int(time))
 	data = []
-
-	deb = date.strftime("%Y:%m:%d") + " XXX "
 
 	users = User.query.all()
 	for user in users:
@@ -106,8 +104,7 @@ def get_for_all(time=None):
 		
 		for visit in visits:
 			beacon = Beacon.query.filter(Beacon.id == visit.beacon_id).one()
-			deb += visit.time_entered.strftime("%Y:%m:%d") + "|"
-
+			
 			if visit.time_entered.strftime("%Y:%m:%d") != date.strftime("%Y:%m:%d"):
 				continue # This isn't the right day
 
@@ -125,8 +122,7 @@ def get_for_all(time=None):
 				'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
 		data.append({'memberId': user.id, 'name': user.name, 'visits': collected_visits})
 
-	return deb
-	#return json.dumps({'data': data})
+	return json.dumps({'data': data})
 
 #################################
 # API for Android app
