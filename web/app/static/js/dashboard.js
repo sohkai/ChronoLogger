@@ -45,6 +45,7 @@ function DashboardCtrl($scope, $http, $location) {
 		value: [],
 	};
 
+	$scope.dashboard.members = [];
 	$scope.dashboard.previous.members = [];
 
 	$scope.member.members = {};
@@ -59,11 +60,11 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.$on('datepicker-change', function(event, newDate) {
 		$scope.request('/get_for_all/' + newDate, 'GET').then(function(result) {
-			$scope.formatToChart(result, $scope.dashboard.previous.scheduleData, $scope.dashboard.previous.members);
+			$scope.formatToChart(result, $scope.dashboard.previous);
 			if ($scope.dashboard.previous.members.length != 0) {
-				$scope.viewPrevious = true;
+				$scope.showPrevious = true;
 			} else {
-				$scope.viewPrevious = false;
+				$scope.showPrevious = false;
 			}
 		});
 	});
@@ -91,8 +92,8 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.viewDashboard = function() {
 		$scope.request('/get_for_all_today', 'GET').then(function(result) {
-			$scope.formatToChart(result, $scope.dashboard.scheduleData, $scope.dashboard.members);
-			console.log($scope.dashboard.scheduleData)
+			$scope.formatToChart(result, $scope.dashboard);
+			console.log($scope.dashboard)
 			$scope.mode = "main";
 		});
 	}
@@ -110,13 +111,13 @@ function DashboardCtrl($scope, $http, $location) {
 			});
 	}
 
-	$scope.formatToChart = function(raw, schedule, members) {
-		schedule.value = [];
-		members = [];
+	$scope.formatToChart = function(raw, dashboard) {
+		dashboard.scheduleData.value = [];
+		dashboard.members = [];
 		raw = raw.data;
 		for (var name = 0; name < raw.data.length; name++) {
 			if (raw.data[name].visits.length != 0) {
-				members.push({id: raw.data[name].memberId, name: raw.data[name].name});
+				dashboard.members.push({id: raw.data[name].memberId, name: raw.data[name].name});
 			}
 			for (var i = 0; i < raw.data[name].visits.length; i++) {
 				var start = new Date(raw.data[name].visits[i].time_entered * 1000);
@@ -126,7 +127,7 @@ function DashboardCtrl($scope, $http, $location) {
 					var end = new Date();	// if end date is null, then set end date to current time
 				}
 
-				schedule.value.push([
+				dashboard.scheduleData.value.push([
 					raw.data[name].name,
 					raw.data[name].visits[i].location,
 					new Date(0, 0, 0, start.getHours(), start.getMinutes()),
@@ -153,10 +154,11 @@ function DashboardCtrl($scope, $http, $location) {
 }
 
 var DatepickerCtrl = function ($scope) {
-	  $scope.today = function() {
+	  $scope.yesterday = function() {
 	    $scope.dt = new Date();
+	    $scope.dt.setDate($scope.dt.getDate() - 1);
 	  };
-	  $scope.today();
+	  $scope.yesterday();
 
 	  $scope.showWeeks = true;
 	  $scope.toggleWeeks = function () {

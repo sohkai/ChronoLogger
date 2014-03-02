@@ -35,7 +35,7 @@
 			<div class="col-xs-11">
 				<div time-line="dashboard.scheduleData"></div>
 			</div>
-				<div class="dataDetails btn btn-default" ng-repeat="member in dashboard.members" ng-click="viewMember(member.id)">More Info</div>
+			<div class="dataDetails btn btn-default" ng-repeat="member in dashboard.members" ng-click="viewMember(member.id)">More Info</div>
 		</div>
 	</div>
 	<div class="container" ng-show="mode=='main'">
@@ -52,9 +52,10 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-11">
-				<div ng-if="showPrevious" time-line="dashboard.previous.scheduleData"></div>
-				<h5 ng-hide="showPrevious">No logs for day selected.</h5>
+				<div ng-if="showPrevious == true" time-line="dashboard.previous.scheduleData"></div>
+				<h5 ng-if="showPrevious == false">No logs for day selected.</h5>
 			</div>
+			<div class="dataDetails btn btn-default" ng-repeat="member in dashboard.previous.members" ng-click="viewMember(member.id)">More Info</div>
 		</div>
 	</div>
 	<div class="container" ng-if="mode=='users'">
