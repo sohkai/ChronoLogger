@@ -68,7 +68,7 @@ public class LauncherActivity extends Activity {
         EditText username = (EditText) findViewById(R.id.login_username);
         //FIXME: this is terrible but so is this whole login part
         //FIXME: use username
-        DefaultSharedPrefs.putString(DefaultSharedPrefs.EXTRA_USER_EMAIL, "user1@jeff.com"/*username.getText().toString()*/);
+        DefaultSharedPrefs.putString(DefaultSharedPrefs.EXTRA_USER_EMAIL, "brett@linkedin.com"/*username.getText().toString()*/);
         Log.i(TAG, "Starting main activity");
         startActivity(mainIntent);
         resetLoginState();

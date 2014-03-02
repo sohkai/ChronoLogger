@@ -56,8 +56,10 @@ public class TabFragmentHistory extends TabFragmentBase {
     }
     
     private void loadHistoryBeaconList(List<ViewBeacon> viewBeacons) {
-        HistoryBeaconAdapter viewBeaconAdapter = new HistoryBeaconAdapter(getActivity(), viewBeacons.toArray(new ViewBeacon[viewBeacons.size()]));
-        mHistoryList.setAdapter(viewBeaconAdapter);
+        if (getActivity() != null) {
+            HistoryBeaconAdapter viewBeaconAdapter = new HistoryBeaconAdapter(getActivity(), viewBeacons.toArray(new ViewBeacon[viewBeacons.size()]));
+            mHistoryList.setAdapter(viewBeaconAdapter);
+        }
     }
     
     private static class HistoryBeaconAdapter extends ArrayAdapter<ViewBeacon> {

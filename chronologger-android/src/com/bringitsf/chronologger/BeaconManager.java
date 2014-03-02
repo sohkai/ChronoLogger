@@ -18,7 +18,7 @@ public enum BeaconManager {
     INSTANCE;
     
     private static final String TAG = BeaconManager.class.getName();
-    public static final int RANGING_DELAY = 5000;
+    public static final int RANGING_DELAY = 2500;
     
     private static com.estimote.sdk.BeaconManager mBeaconManager;
     private static List<Beacon> mCurrentBeacons = new ArrayList<Beacon>();
