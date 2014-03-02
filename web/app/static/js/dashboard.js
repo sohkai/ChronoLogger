@@ -66,9 +66,35 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.viewMember = function(id) {
 		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
-			console.log(result.data);
+			$scope.member.member = result.data;
+			$scope.member.scheduleData = [];
+
+			var day = {};
+			var date = "";
+			for (var i = 0; i < result.data.visits.length; i++) {
+				var start = new Date(result.data.visits[i].time_entered * 1000);
+				if (date != "" && date.getYear() == start.getYear() && date.getMonth() == start.getMonth() && date.getDay() == start.getDay()) {
+					day.value.push([result.data.name, result.data.visits[i].location, new Date(result.data.visits[i].time_entered * 1000), new Date(result.data.visits[i].time_left * 1000)]);
+				} else {
+					if (day.date) {
+						$scope.member.scheduleData.push(day);
+					}
+					date = start;
+					day = {
+						date: date, 
+						column: [{ type: 'string', id: 'Member' },
+								  { type: 'string', id: 'Location' },
+								  { type: 'date', id: 'Start' },
+								  { type: 'date', id: 'End' }],
+						value: [[result.data.name, result.data.visits[i].location, new Date(result.data.visits[i].time_entered * 1000), new Date(result.data.visits[i].time_left * 1000)]],
+					};
+				}
+			}
+			$scope.member.scheduleData.push(day);
+			console.log($scope.member.scheduleData);
+			
+			$scope.mode = 'member';
 		});
-		$scope.mode = 'member';
 	}
 
 	$scope.request = function(url, type, data) {
@@ -86,7 +112,6 @@ function DashboardCtrl($scope, $http, $location) {
 
 
 	$scope.request('/get_for_all_today', 'GET').then(function(result) {
-		console.log(result.data);
 	});
 
 }
