@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/listview_horizontal_padding"
         android:paddingRight="@dimen/listview_horizontal_padding"
-        android:paddingTop="30dp"
+        android:paddingTop="10dp"
         android:paddingBottom="@dimen/listview_vertical_padding"
         android:clipToPadding="false"
         android:scrollbarStyle="outsideInset"

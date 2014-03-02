@@ -8,6 +8,14 @@ from models import User
 from models import Visits
 from models import Beacon
 
+def heroku_mod(tm):
+	# LOCAL
+	return tm
+
+	if tm == '':
+		return tm
+	return str(int(tm) + 8 * 60 * 60)
+
 @app.route('/logout')
 def logout():
 	session['chrono_token'] = ''
@@ -98,7 +106,7 @@ def get_for_user(id = None):
 		except:
 			time_left = ''
 
-		visits_to_return.append({'time_entered': time_entered, 'time_left': time_left, \
+		visits_to_return.append({'time_entered': heroku_mod(time_entered), 'time_left': heroku_mod(time_left), \
 			'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
 
 	return json.dumps({'visits': visits_to_return, 'name': user.name, 'picture': user.picture})
@@ -133,7 +141,7 @@ def get_for_all(time=None):
 			except:
 				time_left = ''
 
-			collected_visits.append({'time_entered': time_entered, 'time_left': time_left, \
+			collected_visits.append({'time_entered': heroku_mod(time_entered), 'time_left': heroku_mod(time_left), \
 				'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
 		data.append({'memberId': user.id, 'name': user.name, 'visits': collected_visits})
 
@@ -217,7 +225,7 @@ def get_visits(mail=None):
 		except:
 			time_left = ''
 
-		visits_to_return.append({'time_entered': time_entered, 'time_left': time_left, \
+		visits_to_return.append({'time_entered': heroku_mod(time_entered), 'time_left': heroku_mod(time_left), \
 			'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
 
 	return json.dumps({'visits': visits_to_return, 'name': user.name})

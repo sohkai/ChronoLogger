@@ -16,7 +16,7 @@ angular.module('ChronoLogger', ['ui.bootstrap']).config(function($interpolatePro
 			dataTable.addRows(data.value);
 
 			var options = {
-				height: data.value.length*60,
+				height: data.value.length*40 + 100,
 			};
 
 			chart.draw(dataTable, options);
