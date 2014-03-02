@@ -51,7 +51,7 @@ def get_for_user(id = None):
 		# No user was found
 		return err404()
 
-	visits = Visits.query.filter(Visits.user_id == user.id).all()
+	visits = Visits.query.filter(Visits.user_id == user.id).order_by(Visits.time_entered.desc()).all()
 	
 	visits_to_return = []
 	for visit in visits:
@@ -78,12 +78,12 @@ def get_for_all_today():
 
 @app.route('/get_for_all/<time>')
 def get_for_all(time=None):
-	date = datetime.datetime.fromtimestamp(int(time))
+	date = datetime.datetime.fromtimestamp(int(time) - 8 * 60 * 60)
 	data = []
 
 	users = User.query.all()
 	for user in users:
-		visits = Visits.query.filter(Visits.user_id == user.id).all()
+		visits = Visits.query.filter(Visits.user_id == user.id).order_by(Visits.time_entered.desc()).all()
 		collected_visits = []
 		
 		for visit in visits:
@@ -127,7 +127,7 @@ def checkin(mail=None, beacon_string=None):
 		return err404()
 
 	# Create a new visits object
-	visit = Visits(user_id=user.id, beacon_id=beacon.id, time_entered=datetime.datetime.utcnow(), time_left=None)
+	visit = Visits(user_id=user.id, beacon_id=beacon.id, time_entered=datetime.datetime.utcnow() - datetime.timedelta(hours = 8), time_left=None)
 
 	db.session.add(visit)
 	db.session.commit()
@@ -150,7 +150,7 @@ def leave(mail=None, beacon_string=None):
 
 	# Get the corresponding visit object to complete date left
 	visit = Visits.query.filter(Visits.user_id == user.id and Visits.beacon_id == beacon.id and Visits.time_left == None).one()
-	visit.time_left = datetime.datetime.utcnow()
+	visit.time_left = datetime.datetime.utcnow() - datetime.timedelta(hours = 8)
 
 	db.session.add(visit)
 	db.session.commit()

@@ -25,6 +25,7 @@
 					<li><a ng-click="toggleView('main')" href="#">Main</a></li>
 					<li><a ng-click="toggleView('users')" href="#">Users</a></li>
 					<li><a ng-click="toggleView('member')" href="#">Member</a></li>
+					<li><a ng-click="toggleView('location')" href="#">Locations</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -52,6 +53,10 @@
 				<div time-line="member.scheduleData"></div>
 			</div>
 		</div>
+	</div>
+
+	<div class="container" ng-if="mode=='location'">
+		<h1>{[{test}]}: location</h1>
 	</div>
 
 	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
