@@ -64,8 +64,10 @@ public class TabFragmentHome extends TabFragmentBase {
                 currentBeacons.add(viewBeacon);
             }
         }
-        HomeBeaconAdapter viewBeaconAdapter = new HomeBeaconAdapter(getActivity(), currentBeacons.toArray(new ViewBeacon[currentBeacons.size()]));
-        mHomeList.setAdapter(viewBeaconAdapter);
+        if (getActivity() != null) {
+            HomeBeaconAdapter viewBeaconAdapter = new HomeBeaconAdapter(getActivity(), currentBeacons.toArray(new ViewBeacon[currentBeacons.size()]));
+            mHomeList.setAdapter(viewBeaconAdapter);
+        }
     }
     
     private static class HomeBeaconAdapter extends ArrayAdapter<ViewBeacon> {
