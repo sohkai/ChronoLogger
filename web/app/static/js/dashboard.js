@@ -68,7 +68,11 @@ function DashboardCtrl($scope, $http, $location) {
 				}
 				for (var i = 0; i < result.data[name].visits.length; i++) {
 					var start = new Date(result.data[name].visits[i].time_entered * 1000);
-					var end = new Date(result.data[name].visits[i].time_left * 1000);
+					if (result.data[name].visits[i].time_left == "") {
+						var end = new Date(result.data[name].visits[i].time_left * 1000);
+					} else {
+						var end = new Date();	// if end date is null, then set end date to current time
+					}
 
 					$scope.dashboard.previous.scheduleData.value.push([
 						result.data[name].name,
@@ -147,7 +151,7 @@ function DashboardCtrl($scope, $http, $location) {
 			});
 	}
 
-	
+
 	$scope.toggleView = function(newView) {
 		if (newView === 'location') {
 			$scope.request('/locations', 'GET').then(function(result) {
