@@ -15,7 +15,11 @@ angular.module('ChronoLogger', ['ui.bootstrap']).config(function($interpolatePro
 			}
 			dataTable.addRows(data.value);
 
-			chart.draw(dataTable);
+			var options = {
+				height: data.value.length*60,
+			};
+
+			chart.draw(dataTable, options);
 		});
 	}
 });
