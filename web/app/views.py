@@ -58,11 +58,8 @@ def get_for_all(time = None):
 # API for Android app
 #################################
 
-@app.route('/checkin', methods = ['POST'])
-def checkin():
-	mail = str(request.get('mail'))
-	beacon_string = str(request.get('beacon'))
-
+@app.route('/checkin/<mail>/<beacon_string>', methods = ['POST'])
+def checkin(mail=None, beacon_string=None):
 	try:
 		user = User.query.filter(User.mail == mail).one()
 	except:
@@ -81,13 +78,10 @@ def checkin():
 	db.session.add(visit)
 	db.session.commit()
 
-	return "" # OK
+	return "OK"
 
-@app.route('/leave', methods = ['POST'])
-def leave():
-	mail = str(request.get('mail'))
-	beacon_string = str(request.get('beacon'))
-
+@app.route('/leave/<mail>/<beacon_string>', methods = ['POST'])
+def leave(mail=None, beacon_string=None):
 	try:
 		user = User.query.filter(User.mail == mail).one()
 	except:
@@ -107,11 +101,10 @@ def leave():
 	db.session.add(visit)
 	db.session.commit()
 
-	return ""
+	return "OK"
 
-@app.route('/getvisits', methods = ['GET'])
-def get_visits():
-	mail = str(request.get('mail'))
+@app.route('/getvisits/<mail>', methods = ['GET'])
+def get_visits(mail=None):
 	try:
 		user = User.query.filter(User.mail == mail).one()
 	except:
@@ -122,22 +115,19 @@ def get_visits():
 	
 	visits_to_return = []
 	for visit in visits:
-		beacon = Beacon.query.filter(Beacon.id == beacon_id).one()
-		visits_to_return.append({'time_entered': visit.time_entered, 'time_left': visit.time_left, 'location': beacon.location})
+		beacon = Beacon.query.filter(Beacon.id == visit.beacon_id).one()
+		visits_to_return.append({'time_entered': visit.time_entered.strftime('%s'), 'time_left': visit.time_left.strftime('%s'), \
+			'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
 
 	return json.dumps({'visits': visits_to_return, 'name': user.name})
 
-@app.route('/register_new_device', methods = ['POST'])
+@app.route('/register_new_device/<mail>/<beacon_string>/<location_string>', methods = ['POST'])
 def register_new_device():
-	mail = str(request.get('mail'))
-	beacon_string = str(request.get('beacon'))
-	location_string = str(request.get('location'))
-
-	beacon = Beacon(beacon_identifier=beacon_string, time_entered=datetime.datetime.utcnow(), location=location_string)
+	beacon = Beacon(beacon_identifier=beacon_string, location=location_string)
 	db.session.add(beacon)
 	db.session.commit()
 
-	return ""
+	return "OK"
 
 #################################
 # Error handlers
