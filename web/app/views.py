@@ -142,6 +142,10 @@ def checkin(mail=None, beacon_string=None):
 		# No beacon was found
 		return err404()
 
+	visits = Visits.query.filter(Visits.user_id == user.id).filter(Visits.beacon_id == beacon.id).filter(Visits.time_left == None).all()
+	if len(visits) > 0:
+		return err404() # Already there
+
 	# Create a new visits object
 	visit = Visits(user_id=user.id, beacon_id=beacon.id, time_entered=datetime.datetime.utcnow() - datetime.timedelta(hours = 8), time_left=None)
 
@@ -165,10 +169,11 @@ def leave(mail=None, beacon_string=None):
 		return err404()
 
 	# Get the corresponding visit object to complete date left
-	visit = Visits.query.filter(Visits.user_id == user.id and Visits.beacon_id == beacon.id and Visits.time_left == None).one()
-	visit.time_left = datetime.datetime.utcnow() - datetime.timedelta(hours = 8)
+	visits = Visits.query.filter(Visits.user_id == user.id).filter(Visits.beacon_id == beacon.id).filter(Visits.time_left == None).all()
+	for visit in visits:
+		visit.time_left = datetime.datetime.utcnow() - datetime.timedelta(hours = 8)
+		db.session.add(visit)
 
-	db.session.add(visit)
 	db.session.commit()
 
 	return "OK"
