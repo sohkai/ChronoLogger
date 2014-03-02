@@ -19,12 +19,10 @@
 		<nav class="navbar navbar-inverse" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/">ChronoLogger Admin Panel</a>
+					<a class="navbar-brand" href="#" ng-click="toggleView('main')">ChronoLogger Admin Panel</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li><a ng-click="toggleView('main')" href="#">Main</a></li>
 					<li><a ng-click="toggleView('users')" href="#">Users</a></li>
-					<li><a ng-click="toggleView('member')" href="#">Member</a></li>
 					<li><a ng-click="toggleView('location')" href="#">Locations</a></li>
 				</ul>
 			</div>
@@ -74,18 +72,18 @@
 	</div>
 
 	<div class="container">
-	<div ng-if="mode=='location'" style="width:500px; margin-left: 335px; margin-right: 335px; padding-left: 0px; padding-right: 0px;">
-		<div ng-repeat="item in locations.data" style="width:500px; height: 200px; margin-bottom: 20px;">
-    		<div style="float:left; width: 300px;">
-    			<h3 style="margin-top: 0px;">{[{ item.location_name }]}</h3>
-    			<h4 ng-repeat="user in item.users"><small>{[{ user.name }]} is here since {[{ user.time_entered }]}</small></h4>
-    		</div>
-    		<div style="float:left; width: 200px;">
-    			<img class="locationImage" ng-src="{[{ item.picture }]}" />
-    		</div>
-  		</div>
+		<div ng-show="mode=='location'" style="width:500px; margin-left: 335px; margin-right: 335px; padding-left: 0px; padding-right: 0px;">
+			<div ng-repeat="item in locations.data" style="width:500px; height: 200px; margin-bottom: 20px;">
+	    		<div style="float:left; width: 300px;">
+	    			<h3 style="margin-top: 0px;">{[{ item.location_name }]}</h3>
+	    			<h4 ng-repeat="user in item.users"><small>{[{ user.name }]} is here since {[{ user.time_entered }]}</small></h4>
+	    		</div>
+	    		<div style="float:left; width: 200px;">
+	    			<img class="locationImage" ng-src="{[{ item.picture }]}" />
+	    		</div>
+	  		</div>
+		</div>
 	</div>
-</div>
 
 	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
        'version':'1','packages':['timeline']}]}"></script>
