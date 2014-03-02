@@ -13,19 +13,24 @@ def logout():
 	session['chrono_token'] = ''
 	return redirect('/login')
 
+@app.route('/loginprocess', methods = ['POST'])
+def loginprocess():
+	password = str(request.form.get('password'))
+
+	if password != 'linkedin':
+		return err404()
+	session['chrono_token'] = 'fake'
+	return ""
+
 @app.route('/login')
 def login():
-	session['chrono_token'] = 'fake'
 	return render_template('login.html')
-
-@app.route('/dashboard')
-def dashboard():
-	return render_template('index.html')
 
 def is_loggedin():
 	return 'chrono_token' in session and session['chrono_token'] != ''
 
 @app.route('/')
+@app.route('/dashboard')
 def home():
 	# If logged in, redirect to main dashboard, otherwise
 	# redirect to login page
@@ -85,7 +90,7 @@ def get_for_all(time=None):
 			beacon = Beacon.query.filter(Beacon.id == visit.beacon_id).one()
 
 			if visit.time_entered.strftime("%Y:%m:%d") != date.strftime("%Y:%m:%d"):
-				continue # This isn't today
+				continue # This isn't the right day
 
 			try:
 				time_entered = visit.time_entered.strftime('%s')
