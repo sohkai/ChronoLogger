@@ -40,7 +40,32 @@ def home():
 
 @app.route('/get_for_user/<id>')
 def get_for_user(id = None):
-	return "TODO"
+	try:
+		user = User.query.filter(User.id == id).one()
+	except:
+		# No user was found
+		return err404()
+
+	visits = Visits.query.filter(Visits.user_id == user.id).all()
+	
+	visits_to_return = []
+	for visit in visits:
+		beacon = Beacon.query.filter(Beacon.id == visit.beacon_id).one()
+
+		try:
+			time_entered = visit.time_entered.strftime('%s')
+		except:
+			time_entered = ''
+
+		try:
+			time_left = visit.time_left.strftime('%s')
+		except:
+			time_left = ''
+
+		visits_to_return.append({'time_entered': time_entered, 'time_left': time_left, \
+			'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
+
+	return json.dumps({'visits': visits_to_return, 'name': user.name})
 
 @app.route('/get_for_all')
 def get_for_all():
@@ -116,13 +141,24 @@ def get_visits(mail=None):
 	visits_to_return = []
 	for visit in visits:
 		beacon = Beacon.query.filter(Beacon.id == visit.beacon_id).one()
-		visits_to_return.append({'time_entered': visit.time_entered.strftime('%s'), 'time_left': visit.time_left.strftime('%s'), \
+
+		try:
+			time_entered = visit.time_entered.strftime('%s')
+		except:
+			time_entered = ''
+
+		try:
+			time_left = visit.time_left.strftime('%s')
+		except:
+			time_left = ''
+
+		visits_to_return.append({'time_entered': time_entered, 'time_left': time_left, \
 			'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
 
 	return json.dumps({'visits': visits_to_return, 'name': user.name})
 
-@app.route('/register_new_device/<mail>/<beacon_string>/<location_string>', methods = ['POST'])
-def register_new_device():
+@app.route('/register_new_device/<beacon_string>/<location_string>', methods = ['POST'])
+def register_new_device(beacon_string=None, location_string=None):
 	beacon = Beacon(beacon_identifier=beacon_string, location=location_string)
 	db.session.add(beacon)
 	db.session.commit()
