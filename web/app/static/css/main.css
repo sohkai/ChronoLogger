@@ -1,3 +1,7 @@
+body {
+	margin-bottom: 300px;
+}
+
 .navbar {
 	margin-top: 10px;
 }
@@ -6,3 +10,4 @@
 	margin-top: 4px;
 	margin-bottom: 3px;
 }
+

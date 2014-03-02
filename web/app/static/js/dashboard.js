@@ -1,4 +1,4 @@
-angular.module('ChronoLogger', []).config(function($interpolateProvider){
+angular.module('ChronoLogger', ['ui.bootstrap']).config(function($interpolateProvider){
         $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
     }
 ).directive('timeLine', function() {
@@ -22,43 +22,69 @@ angular.module('ChronoLogger', []).config(function($interpolateProvider){
 
 function DashboardCtrl($scope, $http, $location) {
 	$scope.test = "hello world";
-	$scope.mode = "main" // main for main page, users for user dashboard, member for member details
+	$scope.mode = "" // main for main page, users for user dashboard, member for member details
 
 	$scope.dashboard = {};	// variables used in dashboard
 	$scope.member = {};		// variables used in member
+
+	$scope.dashboard.previous = {};
+	$scope.dashboard.previous.scheduleData = {
+		column: [{ type: 'string', id: 'Member' },
+				  { type: 'string', id: 'Location' },
+				  { type: 'date', id: 'Start' },
+				  { type: 'date', id: 'End' }],
+		value: [],
+	};
 
 	$scope.dashboard.scheduleData = {
 		column: [{ type: 'string', id: 'Member' },
 				  { type: 'string', id: 'Location' },
 				  { type: 'date', id: 'Start' },
 				  { type: 'date', id: 'End' }],
-		value: [[ 'Tim Pei',          'Conference Room', new Date(0,0,0,9,0,0), new Date(0,0,0,11,0,0)],
-				  [ 'Tim Pei',          'Cafeteria', new Date(0,0,0,11,45,0), new Date(0,0,0,12,50,0)],
-				  [ 'Tim Pei',          'Conference Room', new Date(0,0,0,13,0,0), new Date(0,0,0,18,0,0)],
-				  [ 'Brett Sun',     	'Conference Room', new Date(0,0,0,9,0,0), new Date(0,0,0,11,0,0)],
-				  [ 'Brett Sun',        'Cafeteria', new Date(0,0,0,11,45,0), new Date(0,0,0,12,50,0)],
-				  [ 'Brett Sun',        'Conference Room', new Date(0,0,0,13,0,0), new Date(0,0,0,18,0,0)]],
+		value: [],
 	};
 
-	$scope.dashboard.members = [{id: 1, name: 'Tim Pei'}, {id: 2, name: 'Brett Sun'}];
+	$scope.dashboard.previous.members = [];
 
-	$scope.member.member = {
-		id: 1,
-		name: 'Tim Pei',
-		events: [{
-			timeEntered: 1393654219,
-			timeLeft: 1393704219,
-			location: "Conference Room", 
-		},{
-			timeEntered: 1393709219,
-			timeLeft: 1393719219,
-			location: "Conference Room", 
-		},],
-	}
+	$scope.member.member = {};
 
-	$scope.member.mode = "day"; // day, month
+	$scope.member.scheduleData = {
+		column: [{ type: 'string', id: 'Date' },
+				  { type: 'string', id: 'Location' },
+				  { type: 'date', id: 'Start' },
+				  { type: 'date', id: 'End' }],
+		value: [],
+	};
 
-	$scope.member.tableData = $scope.member.member.events;
+	$scope.$on('datepicker-change', function(event, newDate) {
+		$scope.request('/get_for_all/' + newDate, 'GET').then(function(result) {
+			$scope.dashboard.previous.scheduleData.value = [];
+			$scope.dashboard.previous.members = [];
+			result = result.data;
+			for (var name = 0; name < result.data.length; name++) {
+				if (result.data[name].visits.length != 0) {
+					$scope.dashboard.previous.members.push({id: result.data[name].memberId, name: result.data[name].name});
+				}
+				for (var i = 0; i < result.data[name].visits.length; i++) {
+					var start = new Date(result.data[name].visits[i].time_entered * 1000);
+					var end = new Date(result.data[name].visits[i].time_left * 1000);
+
+					$scope.dashboard.previous.scheduleData.value.push([
+						result.data[name].name,
+						result.data[name].visits[i].location,
+						new Date(0, 0, 0, start.getHours(), start.getMinutes()),
+						new Date(0, 0, 0, end.getHours(), end.getMinutes()),
+					]);
+				}
+			}
+
+			if ($scope.dashboard.previous.members.length != 0) {
+				$scope.viewPrevious = true;
+			} else {
+				$scope.viewPrevious = false;
+			}
+		});
+	});
 
 	$scope.toggleView = function(newView) {
 		$scope.mode = newView;
@@ -67,13 +93,7 @@ function DashboardCtrl($scope, $http, $location) {
 	$scope.viewMember = function(id) {
 		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
 			$scope.member.member = result.data;
-			$scope.member.scheduleData = {
-				column: [{ type: 'string', id: 'Date' },
-						  { type: 'string', id: 'Location' },
-						  { type: 'date', id: 'Start' },
-						  { type: 'date', id: 'End' }],
-				value: [],
-			};
+			$scope.member.scheduleData.value = [];
 
 			for (var i = 0; i < result.data.visits.length; i++) {
 				var start = new Date(result.data.visits[i].time_entered * 1000);
@@ -86,9 +106,34 @@ function DashboardCtrl($scope, $http, $location) {
 				]);
 
 			}
-			console.log($scope.member.scheduleData);
-			
+
 			$scope.mode = 'member';
+		});
+	}
+
+	$scope.viewDashboard = function() {
+		$scope.request('/get_for_all_today', 'GET').then(function(result) {
+			$scope.dashboard.scheduleData.value = [];
+			$scope.dashboard.members = [];
+			result = result.data;
+			for (var name = 0; name < result.data.length; name++) {
+				if (result.data[name].visits.length != 0) {
+					$scope.dashboard.members.push({id: result.data[name].memberId, name: result.data[name].name});
+				}
+				for (var i = 0; i < result.data[name].visits.length; i++) {
+					var start = new Date(result.data[name].visits[i].time_entered * 1000);
+					var end = new Date(result.data[name].visits[i].time_left * 1000);
+
+					$scope.dashboard.scheduleData.value.push([
+						result.data[name].name,
+						result.data[name].visits[i].location,
+						new Date(0, 0, 0, start.getHours(), start.getMinutes()),
+						new Date(0, 0, 0, end.getHours(), end.getMinutes()),
+					]);
+				}
+			}
+			console.log($scope.dashboard.scheduleData)
+			$scope.mode = "main";
 		});
 	}
 
@@ -105,8 +150,54 @@ function DashboardCtrl($scope, $http, $location) {
 			});
 	}
 
-
-	$scope.request('/get_for_all_today', 'GET').then(function(result) {
-	});
+	$scope.viewDashboard();
 
 }
+
+var DatepickerCtrl = function ($scope) {
+	  $scope.today = function() {
+	    $scope.dt = new Date();
+	  };
+	  $scope.today();
+
+	  $scope.showWeeks = true;
+	  $scope.toggleWeeks = function () {
+	    $scope.showWeeks = ! $scope.showWeeks;
+	  };
+
+	  $scope.clear = function () {
+	    $scope.dt = null;
+	  };
+
+	  $scope.maxDate = new Date();
+	  $scope.maxDate.setDate($scope.maxDate.getDate() - 1);	
+
+	  $scope.open = function($event) {
+	    $event.preventDefault();
+	    $event.stopPropagation();
+
+	    $scope.opened = true;
+	  };
+
+	  $scope.dateOptions = {
+	    'year-format': "'yy'",
+	    'starting-day': 1
+	  };
+
+	  $scope.format = 'dd-MMMM-yyyy';
+
+
+		$scope.dashboard.previous.scheduleData = {
+			column: [{ type: 'string', id: 'Member' },
+					  { type: 'string', id: 'Location' },
+					  { type: 'date', id: 'Start' },
+					  { type: 'date', id: 'End' }],
+			value: [],
+		};
+
+		$scope.$watch('dt', function() {
+			$scope.$emit('datepicker-change',  Math.floor($scope.dt.getTime()/1000));
+		});
+
+
+};

@@ -104,7 +104,7 @@ def get_for_all(time=None):
 
 			collected_visits.append({'time_entered': time_entered, 'time_left': time_left, \
 				'location': beacon.location, 'beacon_string': beacon.beacon_identifier})
-		data.append({'name': user.name, 'visits': collected_visits})
+		data.append({'memberId': user.id, 'name': user.name, 'visits': collected_visits})
 
 	return json.dumps({'data': data})
 
