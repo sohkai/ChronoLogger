@@ -2,5 +2,27 @@
 <resources>
 
     <string name="app_name">Chrono Logger</string>
+    
+    <!-- Login text -->
+    <string name="login_username_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_button">Log in</string>
+    <string name="login_forget_password">Forgot password?</string>
+    <string name="login_signup">Sign up</string>
+    
+    <!-- Viewpager tab names -->
+    <string name="tab_admin">Administration</string>
+    <string name="tab_current">Current</string>
+    <string name="tab_history">History</string>
+    
+    <!-- Settings -->
+    <string name="menu_sign_out">Log out</string>
+    
+    <!-- Dialog message -->
+    <string name="dialog_device_not_support">Unfortunately, your device does not support Bluetooth Low Energy.</string>
+    
+    <!-- Toast messages -->
+    <string name="toast_forgot_password">A new password has been emailed to your account.</string>
+    <string name="toast_ranging_failed">Not able to start looking for iBeacons. Please try again at a later time.</string>
 
 </resources>

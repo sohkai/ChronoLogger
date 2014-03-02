@@ -13,19 +13,26 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Estimote SDK -->
+    <!-- Estimote SDK Bluetooth privileges -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
+    
+	<!-- Declaration that this app is usable on phones with Bluetooth Low Energy. -->
+	<uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    
+	<!-- Let's cheat and just keep this guy portrait for now -->
     <application
-        android:name="com.bringitsf.chronologger.ChronoLoggerApplication"
+        android:name=".ChronoLoggerApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
+        android:screenOrientation="portrait"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
+        android:theme="@android:style/Theme.Holo.Light" >
+        
         <activity
-            android:name="com.bringitsf.chronologger.LauncherActivity"
+            android:name=".LauncherActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,10 +40,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name="com.bringitsf.chronologger.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName=".LauncherActivity" >
         </activity>
+        
+        <!-- Estimote receiver service -->
+        <service android:name="com.estimote.sdk.service.BeaconService"
+           android:exported="false"/>
     </application>
 
 </manifest>

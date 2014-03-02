@@ -61,6 +61,34 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.member.tableData = $scope.member.member.events;
 
+	$scope.viewMember = function(id) {
+		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
+			$scope.member.member = result.data;
+			$scope.member.scheduleData = {
+				column: [{ type: 'string', id: 'Date' },
+						  { type: 'string', id: 'Location' },
+						  { type: 'date', id: 'Start' },
+						  { type: 'date', id: 'End' }],
+				value: [],
+			};
+
+			for (var i = 0; i < result.data.visits.length; i++) {
+				var start = new Date(result.data.visits[i].time_entered * 1000);
+				var end = new Date(result.data.visits[i].time_left * 1000);
+				$scope.member.scheduleData.value.push([
+					moment(start).format('dddd, MMMM Do YYYY'), 
+					result.data.visits[i].location, 
+					new Date(0, 0, 0, start.getHours(), start.getMinutes()),
+					new Date(0, 0, 0, end.getHours(), end.getMinutes()),
+				]);
+
+			}
+			console.log($scope.member.scheduleData);
+			
+			$scope.mode = 'member';
+		});
+	}
+
 	$scope.request = function(url, type, data) {
 		console.log("Sending " + type + " request to " + url + " (data: " + data + ")");
 		return $http({method: type, url: url, data: data})
@@ -84,16 +112,5 @@ function DashboardCtrl($scope, $http, $location) {
 			$scope.mode = newView;
 		}
 	}
-
-	$scope.viewMember = function(id) {
-		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
-			console.log(result.data);
-		});
-		$scope.mode = 'member';
-	}
-
-	$scope.request('/get_for_all_today', 'GET').then(function(result) {
-		console.log(result.data);
-	});
 
 }
