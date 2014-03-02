@@ -6,6 +6,7 @@ import os, json
 from app.models import User
 from app.models import Visits
 from app.models import Beacon
+import random
 
 beacon1 = Beacon(beacon_identifier="Fake1", location="Google X Labs", picture='/static/images/google.jpg')
 beacon2 = Beacon(beacon_identifier="Fake2", location="Google Cafeteria", picture='/static/images/googlecafe.jpg')
@@ -52,6 +53,20 @@ visit3 = Visits(user_id=user3.id, beacon_id=beacon3.id, time_entered=datetime.da
 
 visit4 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 11, 30, 0), time_left=datetime.datetime(2014, 03, 1, 15, 30, 0))
 visit5 = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 16, 10, 0), time_left=datetime.datetime(2014, 03, 1, 17, 0, 0))
+
+for i in xrange(20):
+	visit = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(9, 12), random.randint(10, 50), 0), time_left=datetime.datetime(2014, 02, i+2, random.randint(13, 18), random.randint(1, 55), 0))
+	db.session.add(visit)
+	db.session.commit()
+
+	visit = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(19, 20), random.randint(10, 20), 0), time_left=datetime.datetime(2014, 02, i+2, 20, random.randint(30, 55), 0))
+	db.session.add(visit)
+	db.session.commit()
+
+	#visit = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(9, 12), random.randint(10, 50), 0), time_left=datetime.datetime(2014, 02, i+2, random.randint(13, 18), random.randint(1, 55), 0))
+	#db.session.add(visit)
+	#db.session.commit()
+
 
 db.session.add(visit1)
 db.session.add(visit2)
