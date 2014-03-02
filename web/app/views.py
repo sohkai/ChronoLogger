@@ -30,7 +30,6 @@ def is_loggedin():
 	return 'chrono_token' in session and session['chrono_token'] != ''
 
 @app.route('/')
-@app.route('/dashboard')
 def home():
 	# If logged in, redirect to main dashboard, otherwise
 	# redirect to login page
@@ -38,6 +37,23 @@ def home():
 		return render_template('index.html')
 	else:
 		return redirect('/login')
+
+@app.route('/locations')
+def locations():
+	locations = []
+	beacons = Beacon.query.all()
+
+	for beacon in beacons:
+		user_list = []
+		user_set = set()
+
+		visits = db.session.query(Visits, User.name).filter(Visits.time_left == None).filter(Visits.beacon_id == beacon.id).join(User)
+		for visit in visits:
+			if not visit.name in user_set:
+				user_list.append({'name': visit.name, 'time_entered': visit.Visits.time_entered.strftime("%H:%M")})
+		locations.append({'location_name': beacon.location, 'picture': beacon.picture, 'users': user_list})
+
+	return json.dumps({'data': locations})
 
 #################################
 # API for Tim

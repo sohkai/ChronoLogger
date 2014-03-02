@@ -26,6 +26,7 @@ function DashboardCtrl($scope, $http, $location) {
 
 	$scope.dashboard = {};	// variables used in dashboard
 	$scope.member = {};		// variables used in member
+	$scope.locations = {};		// variables used in locations
 
 	$scope.dashboard.previous = {};
 	$scope.dashboard.previous.scheduleData = {
@@ -85,10 +86,6 @@ function DashboardCtrl($scope, $http, $location) {
 			}
 		});
 	});
-
-	$scope.toggleView = function(newView) {
-		$scope.mode = newView;
-	}
 
 	$scope.viewMember = function(id) {
 		$scope.request('/get_for_user/' + id, 'GET').then(function(result) {
@@ -150,6 +147,18 @@ function DashboardCtrl($scope, $http, $location) {
 			});
 	}
 
+	
+	$scope.toggleView = function(newView) {
+		if (newView === 'location') {
+			$scope.request('/locations', 'GET').then(function(result) {
+				$scope.locations = result.data;
+				$scope.mode = newView;
+			});
+		} else {
+			$scope.mode = newView;
+		}
+	}
+
 	$scope.viewDashboard();
 
 }
@@ -198,6 +207,4 @@ var DatepickerCtrl = function ($scope) {
 		$scope.$watch('dt', function() {
 			$scope.$emit('datepicker-change',  Math.floor($scope.dt.getTime()/1000));
 		});
-
-
 };

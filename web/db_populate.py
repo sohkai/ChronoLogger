@@ -7,8 +7,8 @@ from app.models import User
 from app.models import Visits
 from app.models import Beacon
 
-beacon1 = Beacon(beacon_identifier="FakeSoFake1", location="Conference Room")
-beacon2 = Beacon(beacon_identifier="FakeSoFake2", location="Cafe")
+beacon1 = Beacon(beacon_identifier="FakeSoFake1", location="Conference Room", picture='/static/images/bathroom.jpg')
+beacon2 = Beacon(beacon_identifier="FakeSoFake2", location="Cafe", picture='/static/images/linkedin1.jpg')
 db.session.add(beacon1)
 db.session.add(beacon2)
 
