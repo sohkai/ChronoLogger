@@ -15,7 +15,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
-        android:layout_centerInParent="true"
         android:minHeight="20dp"
         android:minWidth="20dp"
         android:contentDescription="@string/res_estimote_icon"
@@ -25,12 +24,13 @@
     <TextView android:id="@+id/history_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/estimote_icon"
-        android:singleLine="true"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:maxLines="3"
+        android:singleLine="false"
+        android:gravity="center_horizontal"
         />
     
     <TextView android:id="@+id/history_time_start"
@@ -38,10 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/history_location"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/estimote_icon"
-        android:singleLine="true"
-        android:textSize="14sp"
+        android:singleLine="false"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
         />
     
     <TextView android:id="@+id/history_time_end"
@@ -51,8 +51,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/estimote_icon"
-        android:singleLine="true"
-        android:textSize="14sp"
+        android:singleLine="false"
+        android:textSize="18sp"
+        android:gravity="center_horizontal"
         />
 
 </RelativeLayout>

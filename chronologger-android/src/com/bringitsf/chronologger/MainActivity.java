@@ -56,7 +56,6 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(ChronoLoggerApplication.getAppContext(), "FOUND RANGING", Toast.LENGTH_LONG).show();
                         BeaconHandler.discoveredBeacons(region, beacons);
                     }
                 });
@@ -69,7 +68,6 @@ public class MainActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(ChronoLoggerApplication.getAppContext(), "FOUND MONITORING", Toast.LENGTH_LONG).show();
                         BeaconHandler.enteredRegion(region);
                     }
                 });
@@ -180,7 +178,7 @@ public class MainActivity extends Activity {
                 // Begin connection to our beacons
                 connectBeacons();
             } else {
-                Toast.makeText(getApplication(),  "Chrono Logger will not be able to actively log you without Bluetooth", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), R.string.toast_bluetooth_not_enabled, Toast.LENGTH_LONG).show();
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

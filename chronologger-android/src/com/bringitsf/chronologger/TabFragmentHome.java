@@ -85,7 +85,8 @@ public class TabFragmentHome extends TabFragmentBase {
             TextView textLocation = (TextView)rowView.findViewById(R.id.home_location);
             TextView textTimeStart = (TextView)rowView.findViewById(R.id.home_time_start);
             textLocation.setText(mViewBeacons[position].locationName);
-            textTimeStart.setText(mViewBeacons[position].timeEntered.toString());
+            String timeStart = mViewBeacons[position].timeEntered.toString();
+            textTimeStart.setText(timeStart.substring(0, timeStart.length() - 5));
             return rowView;
         }
     }

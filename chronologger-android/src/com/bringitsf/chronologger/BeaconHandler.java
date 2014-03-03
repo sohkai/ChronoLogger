@@ -52,9 +52,6 @@ public class BeaconHandler {
                     checkInToServer(beacon);
                 }
             }
-            
-            //FIXME: deal with the fact that this should check for all the other beacons that are not in the new list
-            // because they are obviously not in range and we should tell the server that
         }
     }
     

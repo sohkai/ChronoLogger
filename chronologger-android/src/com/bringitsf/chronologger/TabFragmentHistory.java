@@ -78,10 +78,12 @@ public class TabFragmentHistory extends TabFragmentBase {
             TextView textLocation = (TextView)rowView.findViewById(R.id.history_location);
             TextView textTimeStart = (TextView)rowView.findViewById(R.id.history_time_start);
             textLocation.setText(mViewBeacons[position].locationName);
-            textTimeStart.setText(mViewBeacons[position].timeEntered.toString());
+            String timeStart = mViewBeacons[position].timeEntered.toString();
+            textTimeStart.setText(timeStart.substring(0, timeStart.length() - 5));
             if (mViewBeacons[position].timeLeft != null) {
                 TextView textTimeEnd = (TextView)rowView.findViewById(R.id.history_time_end);
-                textTimeEnd.setText(mViewBeacons[position].timeLeft.toString());
+                String timeEnd = mViewBeacons[position].timeLeft.toString();
+                textTimeEnd.setText(timeEnd.substring(0, timeEnd.length() - 5));
             }
             return rowView;
         }
