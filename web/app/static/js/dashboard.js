@@ -16,7 +16,7 @@ angular.module('ChronoLogger', ['ui.bootstrap']).config(function($interpolatePro
 			dataTable.addRows(data.value);
 
 			var options = {
-				height: data.value.length*40 + 100,
+				height: data.value.length*41 + 100,
 			};
 
 			chart.draw(dataTable, options);
@@ -89,7 +89,7 @@ function DashboardCtrl($scope, $http, $location) {
 					var end = new Date(result.data.visits[i].time_left * 1000);	
 				}
 				$scope.member.scheduleData.value.push([
-					moment(start).format('dddd, MMMM Do YYYY'), 
+					moment(start).format('ddd, MMMM Do YYYY'), 
 					result.data.visits[i].location, 
 					new Date(0, 0, 0, start.getHours(), start.getMinutes()),
 					new Date(0, 0, 0, end.getHours(), end.getMinutes()),
