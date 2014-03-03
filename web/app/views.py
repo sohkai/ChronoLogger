@@ -113,7 +113,7 @@ def get_for_user(id = None):
 
 @app.route('/get_for_all_today')
 def get_for_all_today():
-	return get_for_all(time=datetime.datetime.utcnow().strftime('%s'))
+	return get_for_all(time=(datetime.datetime.utcnow() - datetime.timedelta(hours = 8)).strftime('%s'))
 
 @app.route('/get_for_all/<time>')
 def get_for_all(time=None):

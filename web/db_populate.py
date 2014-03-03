@@ -47,9 +47,9 @@ db.session.commit()
 
 # Google visits
 
-visit1 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 9, 30, 0), time_left=None)
-visit2 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 11, 45, 0), time_left=None)
-visit3 = Visits(user_id=user3.id, beacon_id=beacon3.id, time_entered=datetime.datetime(2014, 03, 2, 12, 45, 0), time_left=None)
+#visit1 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 9, 30, 0), time_left=None)
+#visit2 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 11, 45, 0), time_left=None)
+#visit3 = Visits(user_id=user3.id, beacon_id=beacon3.id, time_entered=datetime.datetime(2014, 03, 2, 12, 45, 0), time_left=None)
 
 visit4 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 11, 30, 0), time_left=datetime.datetime(2014, 03, 1, 15, 30, 0))
 visit5 = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 16, 10, 0), time_left=datetime.datetime(2014, 03, 1, 17, 0, 0))
@@ -91,26 +91,14 @@ for i in xrange(20):
 
 # RackSpace visits
 
-visit1 = Visits(user_id=tim.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 12, 35, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
+visit1 = Visits(user_id=tim.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 11, 25, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
 visit2 = Visits(user_id=brett.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 12, 35, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
-visit3 = Visits(user_id=vlad.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 12, 35, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
+visit3 = Visits(user_id=vlad.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 11, 00, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
 
-visit4 = Visits(user_id=tim.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 35, 0), time_left=None)
-visit5 = Visits(user_id=brett.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 35, 0), time_left=None)
-visit6 = Visits(user_id=vlad.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 35, 0), time_left=None)
+visit4 = Visits(user_id=tim.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 2, 11, 35, 0), time_left=None)
+visit5 = Visits(user_id=brett.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 2, 9, 45, 0), time_left=None)
+visit6 = Visits(user_id=vlad.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 2, 11, 35, 0), time_left=None)
 
-
-#
-#visit4 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 9, 30, 0), time_left=datetime.datetime(2014, 03, 2, 11, 30, 0))
-#visit5 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 11, 45, 0), time_left=datetime.datetime(2014, 03, 2, 12, 45, 0))
-#visit6 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 13, 45, 0), time_left=datetime.datetime(2014, 03, 2, 19, 30, 0))
-#visit11 = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 9, 30, 0), time_left=datetime.datetime(2014, 03, 1, 11, 30, 0))
-#visit12 = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 45, 0), time_left=datetime.datetime(2014, 03, 1, 12, 45, 0))
-#visit13 = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 13, 45, 0), time_left=datetime.datetime(2014, 03, 1, 19, 30, 0))
-#visit14 = Visits(user_id=user2.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 9, 30, 0), time_left=datetime.datetime(2014, 03, 1, 11, 30, 0))
-#visit15 = Visits(user_id=user2.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 45, 0), time_left=datetime.datetime(2014, 03, 1, 12, 45, 0))
-#visit16 = Visits(user_id=user2.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 13, 45, 0), time_left=datetime.datetime(2014, 03, 1, 19, 30, 0))
-#
 db.session.add(visit1)
 db.session.add(visit3)
 db.session.add(visit2)
