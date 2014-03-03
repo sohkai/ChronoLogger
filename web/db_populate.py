@@ -54,31 +54,52 @@ visit3 = Visits(user_id=user3.id, beacon_id=beacon3.id, time_entered=datetime.da
 visit4 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 11, 30, 0), time_left=datetime.datetime(2014, 03, 1, 15, 30, 0))
 visit5 = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 16, 10, 0), time_left=datetime.datetime(2014, 03, 1, 17, 0, 0))
 
-for i in xrange(20):
-	visit = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(9, 12), random.randint(10, 50), 0), time_left=datetime.datetime(2014, 02, i+2, random.randint(13, 18), random.randint(1, 55), 0))
-	db.session.add(visit)
-	db.session.commit()
-
-	visit = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(19, 20), random.randint(10, 20), 0), time_left=datetime.datetime(2014, 02, i+2, 20, random.randint(30, 55), 0))
-	db.session.add(visit)
-	db.session.commit()
-
-	#visit = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(9, 12), random.randint(10, 50), 0), time_left=datetime.datetime(2014, 02, i+2, random.randint(13, 18), random.randint(1, 55), 0))
-	#db.session.add(visit)
-	#db.session.commit()
-
-
 db.session.add(visit1)
 db.session.add(visit2)
 db.session.add(visit3)
 db.session.add(visit4)
 db.session.add(visit5)
 
+for i in xrange(20):
+	visit = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(9, 11), random.randint(10, 50), random.randint(1, 59)), time_left=datetime.datetime(2014, 02, i+2, random.randint(16, 18), random.randint(1, 55), random.randint(1, 59)))
+	db.session.add(visit)
+	db.session.commit()
+
+	if random.randint(1, 5) <= 2:
+		visit = Visits(user_id=user1.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(19, 20), random.randint(10, 20), random.randint(1, 59)), time_left=datetime.datetime(2014, 02, i+2, 20, random.randint(30, 55), random.randint(1, 59)))
+		db.session.add(visit)
+		db.session.commit()
+
+	if random.randint(1, 2) == 1:
+		visit = Visits(user_id=user2.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 02, i + 2, 8, random.randint(5, 20), random.randint(1, 59)), time_left=datetime.datetime(2014, 02, i+2, 8, random.randint(40, 55), random.randint(1, 59)))
+		db.session.add(visit)
+		db.session.commit()
+
+	visit = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(9, 10), random.randint(10, 20), random.randint(1, 59)), time_left=datetime.datetime(2014, 02, i+2, random.randint(16, 17), random.randint(10, 55), random.randint(1, 59)))
+	db.session.add(visit)
+	db.session.commit()
+
+	if random.randint(1, 4) != 4:
+		visit = Visits(user_id=user2.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 02, i + 2, 18, random.randint(5, 20), random.randint(1, 59)), time_left=datetime.datetime(2014, 02, i+2, 18, random.randint(40, 55), random.randint(1, 59)))
+		db.session.add(visit)
+		db.session.commit()
+
+	if random.randint(1, 2) == 1:
+		visit = Visits(user_id=user3.id, beacon_id=beacon3.id, time_entered=datetime.datetime(2014, 02, i + 2, random.randint(11, 14), random.randint(5, 50), random.randint(1, 59)), time_left=datetime.datetime(2014, 02, i+2, random.randint(18, 19), random.randint(40, 55), random.randint(1, 59)))
+		db.session.add(visit)
+		db.session.commit()
+
 # RackSpace visits
 
-#visit1 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 9, 30, 0), time_left=datetime.datetime(2014, 03, 2, 11, 30, 0))
-#visit2 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 11, 45, 0), time_left=datetime.datetime(2014, 03, 2, 12, 45, 0))
-#visit3 = Visits(user_id=user1.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 13, 45, 0), time_left=datetime.datetime(2014, 03, 2, 19, 30, 0))
+visit1 = Visits(user_id=tim.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 12, 35, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
+visit2 = Visits(user_id=brett.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 12, 35, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
+visit3 = Visits(user_id=vlad.id, beacon_id=real_beacon1.id, time_entered=datetime.datetime(2014, 03, 1, 12, 35, 0), time_left=datetime.datetime(2014, 03, 1, 21, 30, 0))
+
+visit4 = Visits(user_id=tim.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 35, 0), time_left=None)
+visit5 = Visits(user_id=brett.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 35, 0), time_left=None)
+visit6 = Visits(user_id=vlad.id, beacon_id=real_beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 35, 0), time_left=None)
+
+
 #
 #visit4 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 9, 30, 0), time_left=datetime.datetime(2014, 03, 2, 11, 30, 0))
 #visit5 = Visits(user_id=user2.id, beacon_id=beacon1.id, time_entered=datetime.datetime(2014, 03, 2, 11, 45, 0), time_left=datetime.datetime(2014, 03, 2, 12, 45, 0))
@@ -90,9 +111,13 @@ db.session.add(visit5)
 #visit15 = Visits(user_id=user2.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 11, 45, 0), time_left=datetime.datetime(2014, 03, 1, 12, 45, 0))
 #visit16 = Visits(user_id=user2.id, beacon_id=beacon2.id, time_entered=datetime.datetime(2014, 03, 1, 13, 45, 0), time_left=datetime.datetime(2014, 03, 1, 19, 30, 0))
 #
-#db.session.add(visit4)
-#db.session.add(visit5)
-#db.session.add(visit6)
+db.session.add(visit1)
+db.session.add(visit3)
+db.session.add(visit2)
+
+db.session.add(visit4)
+db.session.add(visit5)
+db.session.add(visit6)
 #db.session.add(visit11)
 #db.session.add(visit12)
 #db.session.add(visit13)
