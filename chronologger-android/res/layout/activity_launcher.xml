@@ -34,7 +34,6 @@
         android:paddingBottom="7dp"
         android:textSize="20sp"
         android:textColorHint="#7C8589"
-        android:background="@drawable/login_edittext_bg"
         android:hint="@string/login_username_hint"
         android:inputType="textEmailAddress|textNoSuggestions"
         />
@@ -52,7 +51,6 @@
         android:paddingBottom="7dp"
         android:textSize="20sp"
         android:textColorHint="#7C8589"
-        android:background="@drawable/login_edittext_bg"
         android:hint="@string/login_password_hint"
         android:inputType="textVisiblePassword|textNoSuggestions"
         android:imeOptions="actionGo"
