@@ -7,6 +7,13 @@ angular.module('ChronoLogger', ['ui.bootstrap']).config(function($interpolatePro
 		// Log element
 		var chart = new google.visualization.Timeline(element[0]);
 		scope.$watch(attrs.timeLine, function(data) {
+			var uniqueUsers = [];
+
+			for (var i = 0; i < data.value.length; i++) {
+				if (uniqueUsers.indexOf(data.value[i][0]) == -1) {
+					uniqueUsers.push(data.value[i][0]);
+				}
+			}
 			//alert('New Array: '+value);
 			var dataTable = new google.visualization.DataTable();
 
@@ -16,7 +23,7 @@ angular.module('ChronoLogger', ['ui.bootstrap']).config(function($interpolatePro
 			dataTable.addRows(data.value);
 
 			var options = {
-				height: data.value.length*41 + 100,
+				height: uniqueUsers.length*41 + 100,
 			};
 
 			chart.draw(dataTable, options);
