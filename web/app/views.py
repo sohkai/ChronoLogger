@@ -24,8 +24,9 @@ def logout():
 @app.route('/loginprocess', methods = ['POST'])
 def loginprocess():
 	password = str(request.form.get('password'))
+	mail = str(request.form.get('mail'))
 
-	if password != 'linkedin':
+	if password != 'admin' or mail != 'admin@admin.com':
 		return err404()
 	session['chrono_token'] = 'fake'
 	return ""
