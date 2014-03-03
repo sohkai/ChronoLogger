@@ -67,6 +67,21 @@ def locations():
 # API for Tim
 #################################
 
+@app.route('/get_all_members')
+def get_all_members():
+	users = User.query.all()
+	ret = []
+	for user in users:
+		if user.role != 1:
+			ret.append({
+				"id": user.id,
+				"mail": user.mail,
+				"name": user.name,
+				"role": user.role,
+				"picture": user.picture,
+				})
+	return json.dumps(ret)
+
 @app.route('/get_for_user/<id>')
 def get_for_user(id = None):
 	try:

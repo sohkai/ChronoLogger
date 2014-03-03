@@ -1,12 +1,17 @@
 body {
 	margin-bottom: 300px;
-	background-color: #0b2530; /*Default bg, similar to the background's base color*/
-	background-image: url("/static/images/background.png");
-	background-position: right bottom; /*Positioning*/
-	background-repeat: no-repeat; /*Prevent showing multiple background images*/
+	background: #000000; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #000000 31%, #2989d8 89%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(31%,#000000), color-stop(89%,#2989d8)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(-45deg,  #000000 31%,#2989d8 89%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(-45deg,  #000000 31%,#2989d8 89%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(-45deg,  #000000 31%,#2989d8 89%); /* IE10+ */
+	background: linear-gradient(135deg,  #000000 31%,#2989d8 89%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#2989d8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 }
 
-.navbar {
+.navbar-nav {
 	padding-top: 30px;
 }
 
@@ -25,4 +30,9 @@ body {
 	max-height: 100px;
 	position: absolute;
 	right: 10px;
+}
+
+.logo {
+	height: 70px;
+	width: 195px;
 }
